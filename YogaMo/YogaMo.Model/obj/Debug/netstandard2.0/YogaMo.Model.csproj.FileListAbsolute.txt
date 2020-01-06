@@ -1,0 +1,7 @@
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\bin\Debug\netstandard2.0\YogaMo.Model.deps.json
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\bin\Debug\netstandard2.0\YogaMo.Model.dll
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\bin\Debug\netstandard2.0\YogaMo.Model.pdb
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.AssemblyInfoInputs.cache
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.AssemblyInfo.cs
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.dll
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.pdb
