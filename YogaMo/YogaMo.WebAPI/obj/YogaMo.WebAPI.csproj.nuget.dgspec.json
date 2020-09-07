@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj": {}
+    "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
+    "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
+        "projectUniqueName": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
         "projectName": "YogaMo.Model",
-        "projectPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
+        "projectPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
         "packagesPath": "C:\\Users\\Anela\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\obj\\",
+        "outputPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -49,10 +49,6 @@
               "version": "[2.0.3, )",
               "autoReferenced": true
             },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.3, )"
-            },
             "System.ComponentModel.Annotations": {
               "target": "Package",
               "version": "[4.7.0, )"
@@ -68,18 +64,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj": {
+    "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj",
         "projectName": "YogaMo.WebAPI",
-        "projectPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj",
+        "projectPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.WebAPI\\YogaMo.WebAPI.csproj",
         "packagesPath": "C:\\Users\\Anela\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.WebAPI\\obj\\",
+        "outputPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.WebAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -100,8 +96,8 @@
         "frameworks": {
           "netcoreapp2.1": {
             "projectReferences": {
-              "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
-                "projectPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj"
+              "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
+                "projectPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj"
               }
             }
           }
@@ -128,7 +124,7 @@
             "Microsoft.AspNetCore.Razor.Design": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.2.0, )"
+              "version": "[2.1.2, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
@@ -138,11 +134,11 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[3.1.0, )"
+              "version": "[2.1.10, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[4.0.1, )"
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -155,7 +151,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

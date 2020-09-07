@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {}
+    "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
+    "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
+        "projectUniqueName": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
         "projectName": "YogaMo.Model",
-        "projectPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
+        "projectPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\YogaMo.Model.csproj",
         "packagesPath": "C:\\Users\\Anela\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Anela\\source\\repos\\YogaMo\\YogaMo.Model\\obj\\",
+        "outputPath": "C:\\Users\\Anela\\Source\\Repos\\anelap\\RS2\\YogaMo\\YogaMo.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -49,10 +49,6 @@
               "version": "[2.0.3, )",
               "autoReferenced": true
             },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[12.0.3, )"
-            },
             "System.ComponentModel.Annotations": {
               "target": "Package",
               "version": "[4.7.0, )"
@@ -68,7 +64,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

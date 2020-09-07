@@ -11,9 +11,14 @@ namespace YogaMo.WebAPI.Mappers
     {
         public Mapper()
         {
-            CreateMap<Database.Instructor, Model.Instructor>();
-            CreateMap<Database.Instructor, InstructorInsertRequest>().ReverseMap();
+            CreateMap<Database.City, Model.Cities>();
+            CreateMap<Database.City, CitiesInsertRequest>().ReverseMap();
+
+            CreateMap<Database.Instructor, Model.Instructors>();
+            CreateMap<Database.Instructor, InstructorsInsertRequest>().ReverseMap();
+
             CreateMap<Database.Instructor, InstructorSearchRequest>().ReverseMap();
+
 
         }
     }

@@ -5,3 +5,4 @@ C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.
 C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.AssemblyInfo.cs
 C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.dll
 C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.pdb
+C:\Users\Anela\source\repos\YogaMo\YogaMo.Model\obj\Debug\netstandard2.0\YogaMo.Model.csprojAssemblyReference.cache

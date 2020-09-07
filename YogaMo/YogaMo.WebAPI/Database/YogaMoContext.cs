@@ -18,7 +18,6 @@ namespace YogaMo.WebAPI.Database
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<Country> Country { get; set; }
         public virtual DbSet<Instructor> Instructor { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderItem> OrderItem { get; set; }
@@ -51,21 +50,16 @@ namespace YogaMo.WebAPI.Database
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.HasOne(d => d.Country)
-                    .WithMany(p => p.City)
-                    .HasForeignKey(d => d.CountryId)
-                    .HasConstraintName("FK_CountryCity");
             });
 
             modelBuilder.Entity<Client>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Client__A9D105349072FFC4")
+                    .HasName("UQ__Client__A9D105347D71BC7F")
                     .IsUnique();
 
                 entity.HasIndex(e => e.Username)
-                    .HasName("UQ__Client__536C85E4CD827941")
+                    .HasName("UQ__Client__536C85E4AF949E7A")
                     .IsUnique();
 
                 entity.Property(e => e.Email)
@@ -110,21 +104,14 @@ namespace YogaMo.WebAPI.Database
                     .HasConstraintName("FK_ClientCity");
             });
 
-            modelBuilder.Entity<Country>(entity =>
-            {
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50);
-            });
-
             modelBuilder.Entity<Instructor>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Instruct__A9D10534C88DCD9A")
+                    .HasName("UQ__Instruct__A9D10534419B78CA")
                     .IsUnique();
 
                 entity.HasIndex(e => e.Username)
-                    .HasName("UQ__Instruct__536C85E4EB716559")
+                    .HasName("UQ__Instruct__536C85E4C9239B78")
                     .IsUnique();
 
                 entity.Property(e => e.Email)

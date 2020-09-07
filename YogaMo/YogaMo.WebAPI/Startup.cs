@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using YogaMo.WebAPI.Database;
 using YogaMo.WebAPI.Filters;
 using YogaMo.WebAPI.Services;
@@ -30,15 +31,22 @@ namespace YogaMo.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(x=>x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" }); });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
 
-            var connection = @"Server = .; Database = YogaMo; Trusted_Connection = True; ConnectRetryCount = 0";
+            var connection = @"Server =.; Database = YogaMo; Trusted_Connection = True; ConnectRetryCount = 0";
             services.AddDbContext<YogaMoContext>(options => options.UseSqlServer(connection));
 
-            services.AddScoped<IInstructorService, InstructorService>();
+        
+
+            services.AddScoped<ICitiesService, CitiesService>();
+            services.AddScoped<IInstructorsService, InstructorsService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,12 +64,11 @@ namespace YogaMo.WebAPI
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+            });
         }
     }
 }
