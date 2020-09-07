@@ -8,13 +8,13 @@ namespace YogaMo.WebAPI.Database
         public City()
         {
             Client = new HashSet<Client>();
-            Instructor = new HashSet<Instructor>();
         }
 
         public int CityId { get; set; }
         public string Name { get; set; }
+        public int? CountryId { get; set; }
 
-        public ICollection<Client> Client { get; set; }
-        public ICollection<Instructor> Instructor { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual ICollection<Client> Client { get; set; }
     }
 }

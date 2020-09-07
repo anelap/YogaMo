@@ -20,11 +20,13 @@ namespace YogaMo.WebAPI.Database
         public string PasswordSalt { get; set; }
         public string PasswordHash { get; set; }
         public string Gender { get; set; }
-        public bool? Status { get; set; }
         public int? CityId { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
-        public City City { get; set; }
-        public ICollection<Order> Order { get; set; }
-        public ICollection<Rating> Rating { get; set; }
+        public virtual City City { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<Rating> Rating { get; set; }
+
     }
 }
+

@@ -10,6 +10,6 @@ namespace YogaMo.WebAPI.Database
         public string Day { get; set; }
         public string Time { get; set; }
 
-        public Yoga Yoga { get; set; }
+        public virtual Yoga Yoga { get; set; }
     }
 }

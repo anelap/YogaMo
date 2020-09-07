@@ -20,9 +20,8 @@ namespace YogaMo.WebAPI.Database
         public string PasswordHash { get; set; }
         public bool? Status { get; set; }
         public string Title { get; set; }
-        public int? CityId { get; set; }
+        public byte[] ProfilePicture { get; set; }
 
-        public City City { get; set; }
-        public ICollection<Yoga> Yoga { get; set; }
+        public virtual ICollection<Yoga> Yoga { get; set; }
     }
 }

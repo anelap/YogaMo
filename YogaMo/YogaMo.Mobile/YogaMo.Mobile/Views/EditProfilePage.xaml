@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="YogaMo.Mobile.Views.EditProfilePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <ScrollView>
+            <StackLayout Padding="10">
+                <StackLayout Orientation="Vertical">
+                    <Image x:Name="imageView" Source="{Binding User.ProfilePicture, Converter={StaticResource imgConv}}" HeightRequest="150"/>
+                    <ActivityIndicator x:Name="uploadIndicator" IsVisible="False" IsRunning="False" Color="DodgerBlue" />
+                    <Button x:Name="btnSelectPic" Text="Select picture" Clicked="BtnSelectPic_Clicked" BackgroundColor="DodgerBlue" TextColor="White" />
+                    <Button x:Name="btnTakePic" Text="Take picture" Clicked="BtnTakePic_Clicked" BackgroundColor="DodgerBlue" TextColor="White" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Name"/>
+                    <Entry Text="{Binding User.FirstName}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Last name"/>
+                    <Entry Text="{Binding User.LastName}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Email"/>
+                    <Entry Text="{Binding User.Email}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Username"/>
+                    <Entry Text="{Binding User.Username}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Password"/>
+                    <Entry Text="{Binding User.Password}" IsPassword="True"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Gender"/>
+                    <Entry Text="{Binding User.Gender}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Phone number"/>
+                    <Entry Text="{Binding User.Phone}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Country"/>
+                    <Picker ItemsSource="{Binding Countries}" SelectedItem="{Binding Country}" ItemDisplayBinding="{Binding Name}" SelectedIndexChanged="CountryPicker_SelectedIndexChanged"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="City"/>
+                    <Picker ItemsSource="{Binding Cities}" SelectedItem="{Binding City}" ItemDisplayBinding="{Binding Name}"/>
+                </StackLayout>
+
+                <Button x:Name="btnSave" Text="Save changes" Command="{Binding SaveProfileCommand}"/>
+
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

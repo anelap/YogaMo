@@ -10,7 +10,7 @@ namespace YogaMo.WebAPI.Database
         public int? ClientId { get; set; }
         public int Rating1 { get; set; }
 
-        public Client Client { get; set; }
-        public Product Product { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

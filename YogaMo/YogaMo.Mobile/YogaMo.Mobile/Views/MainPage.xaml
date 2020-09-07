@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:views="clr-namespace:YogaMo.Mobile.Views"
+            x:Class="YogaMo.Mobile.Views.MainPage">
+
+    <TabbedPage.Children>
+        <NavigationPage Title="Classes" IconImageSource="tab_classes.png"  BarTextColor="White">
+            <x:Arguments>
+                <views:SchedulePage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Instructors" IconImageSource="tab_instructors.png"  BarTextColor="White">
+            <x:Arguments>
+                <views:InstructorsPage />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="Shop" IconImageSource="tab_shop.png"  BarTextColor="White">
+            <x:Arguments>
+                <views:ShopPage />
+            </x:Arguments>
+        </NavigationPage>
+        
+        <NavigationPage Title="Cart" IconImageSource="tab_cart.png"  BarTextColor="White">
+            <x:Arguments>
+                <views:CartPage />
+            </x:Arguments>
+        </NavigationPage>
+        
+        <NavigationPage Title="Profile" IconImageSource="tab_profile.png" BarTextColor="White">
+            <x:Arguments>
+                <views:ProfilePage />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+    
+</TabbedPage>

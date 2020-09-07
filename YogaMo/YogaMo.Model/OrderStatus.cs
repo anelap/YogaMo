@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace YogaMo.Model
+﻿namespace YogaMo.Model
 {
-    public class OrderStatus
+    public enum OrderStatus
     {
-        public int OrderStatusId { get; set; }
-        public string Status { get; set; }
+        New,
+        Processing,
+        Completed,
+        Canceled
     }
 }

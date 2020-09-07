@@ -14,10 +14,9 @@ namespace YogaMo.WebAPI.Database
         public int? ClientId { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime Date { get; set; }
-        public int? OrderStatusId { get; set; }
-
-        public Client Client { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public ICollection<OrderItem> OrderItem { get; set; }
+
+        public virtual Client Client { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
     }
 }

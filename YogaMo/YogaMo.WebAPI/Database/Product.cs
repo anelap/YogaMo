@@ -17,11 +17,10 @@ namespace YogaMo.WebAPI.Database
         public int QuantityStock { get; set; }
         public decimal Price { get; set; }
         public byte[] Photo { get; set; }
-        public byte[] SlikaThumb { get; set; }
         public bool? Status { get; set; }
 
-        public Category Category { get; set; }
-        public ICollection<OrderItem> OrderItem { get; set; }
-        public ICollection<Rating> Rating { get; set; }
+        public virtual Category Category { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
+        public virtual ICollection<Rating> Rating { get; set; }
     }
 }

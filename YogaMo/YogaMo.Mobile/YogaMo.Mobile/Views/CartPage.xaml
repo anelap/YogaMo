@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="YogaMo.Mobile.Views.CartPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Clicked="ToolbarItem_Clicked" IconImageSource="icon_logout.png" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Orientation="Vertical" Padding="10">
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Total price: "/>
+            <Label Text="{Binding TotalPrice}"/>
+        </StackLayout>
+        <Label Text="There are no items in your cart." IsVisible="{Binding NothingToShow}"/>
+
+        <Button Text="Empty your cart" Command="{Binding EmptyCartCommand}" IsVisible="{Binding SomethingToShow}"/>
+        <Button Text="Continue to checkout" Command="{Binding CheckoutCommand}" IsVisible="{Binding SomethingToShow}"/>
+
+        <ListView ItemsSource="{Binding CartItems}" IsVisible="{Binding SomethingToShow}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding Product.Photo, Converter={StaticResource imgConv}}" WidthRequest="100"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="10,0,0,0">
+                                <Label Text="{Binding Product.Name}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="16" VerticalTextAlignment="Center" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Padding="10,0,0,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center">
+                                <Label Text="{Binding Product.PriceStr}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="14" VerticalTextAlignment="Center" />
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Qty:" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="12" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding Quantity}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="12" VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                
+                                <StackLayout Orientation="Horizontal" IsVisible="{Binding HasSize}">
+                                    <Label Text="Size:" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="12" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding Size}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="12" VerticalTextAlignment="Center" />
+                                </StackLayout>
+                            </StackLayout>
+
+
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </StackLayout>
+</ContentPage>

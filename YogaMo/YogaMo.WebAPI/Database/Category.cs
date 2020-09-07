@@ -13,6 +13,6 @@ namespace YogaMo.WebAPI.Database
         public int CategoryId { get; set; }
         public string Name { get; set; }
 
-        public ICollection<Product> Product { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

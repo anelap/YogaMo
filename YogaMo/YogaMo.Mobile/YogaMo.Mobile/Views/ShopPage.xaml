@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="YogaMo.Mobile.Views.ShopPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Clicked="ToolbarItem_Clicked" IconImageSource="icon_logout.png" />
+    </ContentPage.ToolbarItems>
+    <StackLayout Orientation="Vertical">
+        <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" ItemDisplayBinding="{Binding Name}" SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
+
+        <ListView  ItemsSource="{Binding Products}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal">
+                                <Image  Source="{Binding Photo, Converter={StaticResource imgConv}}" WidthRequest="100"/>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="10,0,0,0">
+                                <Label Text="{Binding Name}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="16" VerticalTextAlignment="Center" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Padding="10,0,0,0" HorizontalOptions="EndAndExpand">
+                                <Label Text="{Binding PriceStr}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="14" VerticalTextAlignment="Center" />
+                            </StackLayout>
+
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelectedAsync"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

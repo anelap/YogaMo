@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="YogaMo.Mobile.Views.ProductDetailsPage"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <Image  Source="{Binding Product.Photo, Converter={StaticResource imgConv}}" WidthRequest="150"/>
+            </StackLayout>
+
+            <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                <Label Text="{Binding Product.Name}" FontAttributes="Bold" FontSize="16"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Price: "/>
+                    <Label Text="{Binding Product.PriceStr}"/>
+                </StackLayout>
+
+
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <Picker ItemsSource="{Binding Sizes}" SelectedItem="{Binding SelectedSize}" IsVisible="{Binding SizesEnabled}"/>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+                <Label Text="Qty: "/>
+                <Entry Text="{Binding Quantity}" />
+            </StackLayout>
+            
+
+            <StackLayout Grid.Row="3" Grid.Column="0">
+                <Button Text="Add to cart"  Clicked="Button_Clicked"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

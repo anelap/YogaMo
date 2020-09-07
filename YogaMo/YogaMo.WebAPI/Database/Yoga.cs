@@ -15,7 +15,7 @@ namespace YogaMo.WebAPI.Database
         public int? InstructorId { get; set; }
         public string Description { get; set; }
 
-        public Instructor Instructor { get; set; }
-        public ICollection<YogaClass> YogaClass { get; set; }
+        public virtual Instructor Instructor { get; set; }
+        public virtual ICollection<YogaClass> YogaClass { get; set; }
     }
 }
