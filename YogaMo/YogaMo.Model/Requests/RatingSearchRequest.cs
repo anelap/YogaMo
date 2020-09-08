@@ -4,10 +4,8 @@ using System.Text;
 
 namespace YogaMo.Model.Requests
 {
-    public class RatingInsertRequest
+    public class RatingSearchRequest
     {
         public int ProductId { get; set; }
-        public int ClientId { get; set; }
-        public int Rating { get; set; }
     }
 }

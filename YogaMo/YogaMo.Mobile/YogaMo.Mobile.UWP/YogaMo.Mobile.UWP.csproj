@@ -8,7 +8,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>YogaMo.Mobile.UWP</RootNamespace>
-    <AssemblyName>YogaMo.Mobile.UWP</AssemblyName>
+    <AssemblyName>YogaMo</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
@@ -137,9 +137,17 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="star_empty.png" />
+    <Content Include="star_filled.png" />
+    <Content Include="star_half.png" />
     <Content Include="Stripe_Payment.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="tab_cart.png" />
+    <Content Include="tab_classes.png" />
+    <Content Include="tab_instructors.png" />
+    <Content Include="tab_profile.png" />
+    <Content Include="tab_shop.png" />
     <Content Include="xamarin_logo.png" />
     <Content Include="add.png" />
     <Content Include="YogaMo.png" />
@@ -173,7 +181,7 @@
     <PackageReference Include="Xam.Plugin.Media">
       <Version>5.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.1.9" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
@@ -187,4 +195,9 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadXFormsNugetUpgradeInfoBarYogaMoMobileUWPHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

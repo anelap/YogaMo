@@ -14,7 +14,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Logout" Clicked="ToolbarItem_Clicked" IconImageSource="icon_logout.png" />
     </ContentPage.ToolbarItems>
-    <StackLayout Orientation="Vertical">
+    <StackLayout Orientation="Vertical" Padding="10">
 
         <ListView  ItemsSource="{Binding Instructors}">
             <ListView.ItemTemplate>
@@ -25,17 +25,40 @@
                                 <Image x:Name="imageView" Source="{Binding ProfilePicture, Converter={StaticResource imgConv}}" WidthRequest="100"/>
                             </StackLayout>
 
-                            <StackLayout Orientation="Horizontal" Padding="10,0,0,0">
-                                <Label Text="Instructor: " 
+                            <StackLayout Orientation="Vertical" Padding="10,0,0,0">
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Instructor: " 
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
-                                FontSize="16" VerticalTextAlignment="Center"/>
-                                <Label Text="{Binding Name}" 
+                                FontSize="16" VerticalTextAlignment="Center" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Name}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="16" VerticalTextAlignment="Center" FontAttributes="Bold" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Email: " 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="14" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding Email}" 
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="16" VerticalTextAlignment="Center" />
-                            </StackLayout>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Phone: " 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="14" VerticalTextAlignment="Center"/>
+                                    <Label Text="{Binding Phone}" 
+                                LineBreakMode="NoWrap"
+                                Style="{DynamicResource ListItemDetailTextStyle}"
+                                FontSize="16" VerticalTextAlignment="Center" />
+                                </StackLayout>
 
+                            </StackLayout>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

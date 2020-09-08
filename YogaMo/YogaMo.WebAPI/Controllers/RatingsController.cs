@@ -25,9 +25,9 @@ namespace YogaMo.WebAPI.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Model.Rating>> Get()
+        public ActionResult<List<Model.Rating>> Get([FromQuery] RatingSearchRequest request)
         {
-            return _service.Get();
+            return _service.Get(request);
         }
 
         [HttpGet("{id}")]
@@ -52,6 +52,12 @@ namespace YogaMo.WebAPI.Controllers
         public ActionResult<Model.Rating> Insert(RatingInsertRequest request)
         {
             return _service.Insert(request);
+        }
+        
+        [HttpPost("RateProduct")]
+        public ActionResult<Model.Rating> RateProduct(RatingInsertRequest request)
+        {
+            return _service.RateProduct(request);
         }
 
         [HttpDelete("{id}")]

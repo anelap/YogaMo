@@ -7,7 +7,7 @@
              x:Class="YogaMo.Mobile.Views.CheckoutPage"
              Title="Payment">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="10">
             <Label Text="Please enter your payment information."/>
             <WebView  HeightRequest="500" WidthRequest="300" x:Name="PaymentWebview"/>
         </StackLayout>

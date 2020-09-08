@@ -8,7 +8,7 @@
              Title="{Binding Title}">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Vertical" Padding="10">
 
                 <StackLayout VerticalOptions="Start" HorizontalOptions="Fill">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">

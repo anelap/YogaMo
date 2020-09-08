@@ -10,6 +10,8 @@
         <ResourceDictionary>
             <!--Global Styles-->
             <Color x:Key="NavigationPrimary">#f75a34</Color>
+            <Color x:Key="UWPButtonColor">#00a896</Color>
+            <Color x:Key="UWPTextColor">#ffffff</Color>
             <Style TargetType="NavigationPage">
                 <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="BarTextColor">
@@ -17,10 +19,14 @@
                         <OnPlatform x:TypeArguments="Color">
                             <On Platform="iOS" Value="Black"/>
                             <On Platform="Android" Value="Black"/>
-                            <On Platform="UWP" Value="White"/>
+                            <On Platform="UWP" Value="{StaticResource UWPTextColor}"/>
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource UWPButtonColor}" />
+                <Setter Property="TextColor" Value="{StaticResource UWPTextColor}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

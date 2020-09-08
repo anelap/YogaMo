@@ -14,7 +14,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Logout" Clicked="ToolbarItem_Clicked" IconImageSource="icon_logout.png" />
     </ContentPage.ToolbarItems>
-    <StackLayout Orientation="Vertical">
+    <StackLayout Orientation="Vertical" Padding="10">
         <Picker ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" ItemDisplayBinding="{Binding Name}" SelectedIndexChanged="CategoryPicker_SelectedIndexChanged"/>
 
         <ListView  ItemsSource="{Binding Products}">

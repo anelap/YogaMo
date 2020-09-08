@@ -14,6 +14,7 @@ namespace YogaMo.Model
         public byte[] Photo { get; set; }
         public bool? Status { get; set; }
         public string PriceStr => "$" + Price.ToString("0.00");
-        //rating
+
+        public double AverageRating { get; set; }
     }
 }

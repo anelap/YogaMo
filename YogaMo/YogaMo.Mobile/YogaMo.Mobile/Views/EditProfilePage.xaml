@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
              mc:Ignorable="d"
-             x:Class="YogaMo.Mobile.Views.EditProfilePage">
+             x:Class="YogaMo.Mobile.Views.EditProfilePage"
+             Title="{Binding Title}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
@@ -18,8 +19,8 @@
                 <StackLayout Orientation="Vertical">
                     <Image x:Name="imageView" Source="{Binding User.ProfilePicture, Converter={StaticResource imgConv}}" HeightRequest="150"/>
                     <ActivityIndicator x:Name="uploadIndicator" IsVisible="False" IsRunning="False" Color="DodgerBlue" />
-                    <Button x:Name="btnSelectPic" Text="Select picture" Clicked="BtnSelectPic_Clicked" BackgroundColor="DodgerBlue" TextColor="White" />
-                    <Button x:Name="btnTakePic" Text="Take picture" Clicked="BtnTakePic_Clicked" BackgroundColor="DodgerBlue" TextColor="White" />
+                    <Button x:Name="btnSelectPic" Text="Select picture" Clicked="BtnSelectPic_Clicked" />
+                    <Button x:Name="btnTakePic" Text="Take a picture" Clicked="BtnTakePic_Clicked" />
                 </StackLayout>
                 <StackLayout Orientation="Vertical">
                     <Label Text="Name"/>

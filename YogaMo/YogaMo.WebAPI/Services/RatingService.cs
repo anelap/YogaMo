@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace YogaMo.WebAPI.Services
     {
         private readonly _150222Context _context;
         private readonly IMapper _mapper;
-        public RatingService(_150222Context context, IMapper mapper)
+        private readonly IClientService _clientService;
+
+        public RatingService(_150222Context context, IMapper mapper, IClientService clientService)
         {
             _context = context;
             _mapper = mapper;
+            this._clientService = clientService;
         }
         public void Delete(int id)
         {
@@ -26,9 +30,14 @@ namespace YogaMo.WebAPI.Services
             _context.SaveChanges();
         }
 
-        public List<Model.Rating> Get()
+        public List<Model.Rating> Get(RatingSearchRequest request)
         {
-            var list = _context.Rating.ToList();
+            int ClientId = _clientService.GetCurrentClient().ClientId;
+
+            var list = _context.Rating
+                .Where(x => x.ProductId == request.ProductId || request.ProductId == 0)
+                .Where(x => x.ClientId == ClientId)
+                .ToList();
 
             return _mapper.Map<List<Model.Rating>>(list);
         }
@@ -57,6 +66,27 @@ namespace YogaMo.WebAPI.Services
             _context.Rating.Add(entity);
             _context.SaveChanges();
 
+            return _mapper.Map<Model.Rating>(entity);
+        }
+
+        public Model.Rating RateProduct(RatingInsertRequest request)
+        {
+            int ClientId = _clientService.GetCurrentClient().ClientId;
+
+            Database.Rating entity = _context.Rating.Where(x => x.ProductId == request.ProductId && x.ClientId == ClientId).FirstOrDefault();
+            if (entity != null)
+            {
+                entity.Rating1 = request.Rating;
+            }
+            else
+            {
+                entity = _mapper.Map<Database.Rating>(request);
+                entity.ClientId = ClientId;
+                entity.Rating1 = request.Rating;
+
+                _context.Rating.Add(entity);
+            }
+            _context.SaveChanges();
             return _mapper.Map<Model.Rating>(entity);
         }
 
