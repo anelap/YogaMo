@@ -31,7 +31,6 @@ namespace YogaMo.Model.Requests
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-
         public byte[] ProfilePicture { get; set; }
     }
 }

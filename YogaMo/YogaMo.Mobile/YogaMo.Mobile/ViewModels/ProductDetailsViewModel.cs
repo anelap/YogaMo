@@ -17,6 +17,7 @@ namespace YogaMo.Mobile.ViewModels
         public readonly APIService _serviceProducts = new APIService("Products");
         public readonly APIService _serviceOrderItems = new APIService("OrderItems");
         private readonly APIService _serviceRatings = new APIService("Ratings");
+        private readonly APIService _serviceRecommender = new APIService("Recommender");
         private readonly int _productId;
         private readonly INavigation Navigation;
 
@@ -220,6 +221,8 @@ namespace YogaMo.Mobile.ViewModels
             set { SetProperty(ref _star4, value); }
         }
         private Star _star5;
+        private List<Product> RecommendedProducts;
+
         public Star Star5
         {
             get { return _star5; }
@@ -261,48 +264,73 @@ namespace YogaMo.Mobile.ViewModels
             LoadSizes();
             await LoadExistingRating();
             UpdateRatingStars();
-            //await LoadRecommendations();
-             LoadRecommendations();
+            await LoadRecommendations();
         }
 
-        private void LoadRecommendations()
+        private async Task LoadRecommendations()
         {
-            RecommendedProduct1 = RecommendedProduct2 = RecommendedProduct3 = Product;
+            RecommendedProducts = await _serviceRecommender.GetById<List<Model.Product>>(_productId);
+            if (RecommendedProducts.Count > 0)
+            {
+                if (RecommendedProducts.Count == 3)
+                {
+                    if (RecommendedProducts[2].Photo == null || RecommendedProducts[2].Photo.Length == 0)
+                    {
+                        RecommendedProducts[2].Photo = File.ReadAllBytes("default_profile.png");
+                    }
 
-            //InitializeRecommendationStars();
-            UpdateRecommendationeStars();
+                    RecommendedProduct3 = RecommendedProducts[2];
+                    ThreeProductsShown = true;
+                }
+                else
+                    RecommendedProduct3 = RecommendedProducts[0];
+
+                if (RecommendedProducts.Count >= 2)
+                {
+                    if (RecommendedProducts[1].Photo == null || RecommendedProducts[1].Photo.Length == 0)
+                    {
+                        RecommendedProducts[1].Photo = File.ReadAllBytes("default_profile.png");
+                    }
+                    RecommendedProduct2 = RecommendedProducts[1];
+                    TwoProductsShown = true;
+                }
+                else
+                    RecommendedProduct2 = RecommendedProducts[0];
+
+                if (RecommendedProducts[0].Photo == null || RecommendedProducts[0].Photo.Length == 0)
+                {
+                    RecommendedProducts[0].Photo = File.ReadAllBytes("default_profile.png");
+                }
+                RecommendedProduct1 = RecommendedProducts[0];
+
+                UpdateRecommendationeStars();
+
+            }
+
         }
 
-        private void InitializeRecommendationStars()
+        private bool _threeProductsShown = false;
+
+        public bool ThreeProductsShown
         {
-            RecommendedProduct1Star1 = new Star();
-            RecommendedProduct1Star2 = new Star();
-            RecommendedProduct1Star3 = new Star();
-            RecommendedProduct1Star4 = new Star();
-            RecommendedProduct1Star5 = new Star();
-
-            RecommendedProduct2Star1 = new Star();
-            RecommendedProduct2Star2 = new Star();
-            RecommendedProduct2Star3 = new Star();
-            RecommendedProduct2Star4 = new Star();
-            RecommendedProduct2Star5 = new Star();
-
-            RecommendedProduct3Star1 = new Star();
-            RecommendedProduct3Star2 = new Star();
-            RecommendedProduct3Star3 = new Star();
-            RecommendedProduct3Star4 = new Star();
-            RecommendedProduct3Star5 = new Star();
+            get { return _threeProductsShown; }
+            set { SetProperty(ref _threeProductsShown, value); }
         }
+
+        private bool _twoProductsShown = false;
+
+        public bool TwoProductsShown
+        {
+            get { return _twoProductsShown; }
+            set { SetProperty(ref _twoProductsShown, value); }
+        }
+
 
         private void UpdateRecommendationeStars()
         {
             var Star_Empty = new Star { Image = "star_empty.png" };
             var Star_Filled = new Star { Image = "star_filled.png" };
             var Star_Half = new Star { Image = "star_half.png" };
-
-            RecommendedProduct1.AverageRating = 4.20;
-            RecommendedProduct2.AverageRating = 1.5;
-            RecommendedProduct3.AverageRating = 2.70;
 
             RecommendedProduct1Star1 =
             RecommendedProduct1Star2 =

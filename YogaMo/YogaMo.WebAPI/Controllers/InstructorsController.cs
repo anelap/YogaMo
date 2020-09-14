@@ -14,7 +14,7 @@ namespace YogaMo.WebAPI.Controllers
 {
 
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes = "BasicAuthentication")]
+    //[Authorize(AuthenticationSchemes = "BasicAuthentication")]
     [ApiController]
     public class InstructorsController : ControllerBase // ne zaboraviti ControllerBase
     {
@@ -46,7 +46,7 @@ namespace YogaMo.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public Model.Instructor Update(int id, InstructorsInsertRequest request)
+        public Model.Instructor Update(int id, InstructorsUpdateRequest request)
         {
             return _service.Update(id, request);
         }

@@ -21,28 +21,32 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <StackLayout Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center" Padding="0,0,10,0">
+                <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center" Padding="0,0,10,0">
                     <Image Source="{Binding User.ProfilePicture, Converter={StaticResource imgConv}}" Aspect="AspectFit" HeightRequest="150"/>
                 </StackLayout>
-                <StackLayout Padding="0,0,0,0" Grid.Row="0" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Vertical">
-                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
+                <StackLayout Padding="0,0,0,0" Grid.Row="1" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Vertical">
+                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical" Spacing="10">
                         <Label FontSize="14" FontAttributes="Bold" Text="Name:"/>
                         <Label FontSize="14" FontAttributes="Bold" Text="Username:"/>
                         <Label FontSize="14" FontAttributes="Bold" Text="Email:"/>
+                        <Label FontSize="14" FontAttributes="Bold" Text="Country:"/>
+                        <Label FontSize="14" FontAttributes="Bold" Text="City:"/>
                     </StackLayout>
                 </StackLayout>
-                <StackLayout Padding="0,0,0,0" Grid.Row="0" Grid.Column="2" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Vertical">
-                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
+                <StackLayout Padding="0,0,0,0" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Vertical">
+                    <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical" Spacing="10">
                         <Label Text="{Binding User.NameLastname}"/>
                         <Label Text="{Binding User.Username}"/>
                         <Label Text="{Binding User.Email}"/>
+                        <Label Text="{Binding User.City.Country.Name}"/>
+                        <Label Text="{Binding User.City.Name}"/>
                     </StackLayout>
                 </StackLayout>
             </Grid>

@@ -97,12 +97,7 @@ namespace YogaMo.WebAPI
             services.AddScoped<IOrderItemService, OrderItemService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<ICountryService, CountryService>();
-
-
-
-
-
-
+            services.AddScoped<IRecommenderService, RecommenderService>();
 
             var connection = @"Server=.;Database=150222; Trusted_Connection=True; ConnectRetryCount=0";
             services.AddDbContext<_150222Context>(options => options.UseSqlServer(connection));

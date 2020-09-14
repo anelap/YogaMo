@@ -45,8 +45,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtGender = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtCityId = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.cmbCity = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -144,6 +144,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(175, 22);
             this.txtPassword.TabIndex = 10;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
             // label7
             // 
@@ -160,6 +161,7 @@
             this.txtPassConfirm.Name = "txtPassConfirm";
             this.txtPassConfirm.Size = new System.Drawing.Size(175, 22);
             this.txtPassConfirm.TabIndex = 12;
+            this.txtPassConfirm.UseSystemPasswordChar = true;
             // 
             // label8
             // 
@@ -182,34 +184,37 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(235, 325);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 17);
+            this.label9.Size = new System.Drawing.Size(31, 17);
             this.label9.TabIndex = 17;
-            this.label9.Text = "City Id";
+            this.label9.Text = "City";
             // 
-            // txtCityId
+            // btnSave
             // 
-            this.txtCityId.Location = new System.Drawing.Point(238, 345);
-            this.txtCityId.Name = "txtCityId";
-            this.txtCityId.Size = new System.Drawing.Size(174, 22);
-            this.txtCityId.TabIndex = 16;
+            this.btnSave.Location = new System.Drawing.Point(317, 447);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(95, 37);
+            this.btnSave.TabIndex = 18;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // button1
+            // cmbCity
             // 
-            this.button1.Location = new System.Drawing.Point(317, 457);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(95, 37);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.cmbCity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCity.FormattingEnabled = true;
+            this.cmbCity.Location = new System.Drawing.Point(237, 343);
+            this.cmbCity.Name = "cmbCity";
+            this.cmbCity.Size = new System.Drawing.Size(165, 24);
+            this.cmbCity.TabIndex = 19;
             // 
             // frmClientDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 519);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.cmbCity);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtCityId);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtGender);
             this.Controls.Add(this.label7);
@@ -230,6 +235,7 @@
             this.MinimumSize = new System.Drawing.Size(462, 566);
             this.Name = "frmClientDetails";
             this.Text = "Client Details";
+            this.Load += new System.EventHandler(this.frmClientDetails_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,7 +260,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtGender;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtCityId;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ComboBox cmbCity;
     }
 }

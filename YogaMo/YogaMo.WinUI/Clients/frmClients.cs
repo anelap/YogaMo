@@ -10,39 +10,71 @@ using System.Windows.Forms;
 using Flurl.Http;
 using Flurl;
 using YogaMo.Model.Requests;
+using YogaMo.Model;
 
 namespace YogaMo.WinUI.Clients
 {
     public partial class frmClients : Form
     {
-        private readonly APIService _apiService = new APIService("Clients");
+        private readonly APIService _serviceClients = new APIService("Clients");
+        private readonly APIService _serviceCities = new APIService("Cities");
         public frmClients()
         {
             InitializeComponent();
         }
 
-        private async void btnSearch_Click(object sender, EventArgs e)
+        private async Task LoadClients()
         {
-            var search = new ClientSearchRequest()
+            var request = new ClientSearchRequest()
             {
-                FirstName = txtSearchName.Text,
-                City = txtSearchCity.Text
+                Name = txtSearchName.Text
             };
+            if (cmbSearchCity.SelectedItem != null)
+                request.CityId = (cmbSearchCity.SelectedItem as City).CityId;
 
-
-            var result = await _apiService.Get<List<Model.Client>>(search);
+            var result = await _serviceClients.Get<List<Model.Client>>(request);
             dgvClients.AutoGenerateColumns = false;
             dgvClients.DataSource = result;
         }
 
-        private void dgvClients_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private async void frmClients_Load(object sender, EventArgs e)
         {
-
+            await LoadCities();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private async Task LoadCities()
         {
+            var list = await _serviceCities.Get<List<Model.City>>();
+            list.Insert(0, new Model.City
+            {
+                CityId = 0,
+                Name = "All"
+            });
+            cmbSearchCity.DataSource = list;
+            cmbSearchCity.DisplayMember = "Name";
+        }
 
+        private async void cmbSearchCity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            await LoadClients();
+        }
+
+        private async void txtSearchName_TextChanged(object sender, EventArgs e)
+        {
+            await LoadClients();
+        }
+
+        private async void dgvClients_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var client = dgvClients.SelectedRows[0].DataBoundItem as Model.Client;
+            if(client != null)
+            {
+                var frm = new frmClientDetails(client.ClientId);
+                if(frm.ShowDialog() == DialogResult.OK)
+                {
+                    await LoadClients();
+                }
+            }
         }
     }
 }

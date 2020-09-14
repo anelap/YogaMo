@@ -17,7 +17,7 @@ namespace YogaMo.WebAPI.Database
         public int QuantityStock { get; set; }
         public decimal Price { get; set; }
         public byte[] Photo { get; set; }
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual ICollection<OrderItem> OrderItem { get; set; }

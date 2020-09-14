@@ -153,20 +153,20 @@
                             />
                     </StackLayout>
 
-                    <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding TwoProductsShown}">
                         <ImageButton 
                             Command="{Binding GoToProductCommand}" CommandParameter="{Binding RecommendedProduct2}"
                             BackgroundColor="Transparent"  Source="{Binding RecommendedProduct2.Photo, Converter={StaticResource imgConv}}" WidthRequest="100"/>
                     </StackLayout>
-                    <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding TwoProductsShown}">
                         <Label Text="{Binding RecommendedProduct2.Name}" FontAttributes="Bold" FontSize="16"/>
                     </StackLayout>
-                    <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="{Binding TwoProductsShown}">
                         <Label Text="Price: "/>
                         <Label Text="{Binding RecommendedProduct2.PriceStr}"/>
                     </StackLayout>
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal" Grid.Row="3" Grid.Column="1" HorizontalOptions="Center" IsVisible="{Binding TwoProductsShown}">
                         <Image
         BackgroundColor="Transparent"
         Source="{Binding RecommendedProduct2Star1.Image}"
@@ -194,20 +194,20 @@
                             />
                     </StackLayout>
 
-                    <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" IsVisible="{Binding ThreeProductsShown}">
                         <ImageButton 
                             Command="{Binding GoToProductCommand}" CommandParameter="{Binding RecommendedProduct3}"
                             BackgroundColor="Transparent"  Source="{Binding RecommendedProduct3.Photo, Converter={StaticResource imgConv}}" WidthRequest="100"/>
                     </StackLayout>
-                    <StackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" IsVisible="{Binding ThreeProductsShown}">
                         <Label Text="{Binding RecommendedProduct3.Name}" FontAttributes="Bold" FontSize="16"/>
                     </StackLayout>
-                    <StackLayout Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalOptions="Center">
+                    <StackLayout Grid.Row="2" Grid.Column="2" Orientation="Horizontal" HorizontalOptions="Center" IsVisible="{Binding ThreeProductsShown}">
                         <Label Text="Price: "/>
                         <Label Text="{Binding RecommendedProduct3.PriceStr}"/>
                     </StackLayout>
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="3" Grid.Column="2" HorizontalOptions="Center">
+                    <StackLayout Orientation="Horizontal" Grid.Row="3" Grid.Column="2" HorizontalOptions="Center" IsVisible="{Binding ThreeProductsShown}">
                         <Image
         BackgroundColor="Transparent"
         Source="{Binding RecommendedProduct3Star1.Image}"

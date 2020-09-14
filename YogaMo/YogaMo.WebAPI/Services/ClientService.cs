@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using YogaMo.Model;
 using YogaMo.Model.Requests;
 using YogaMo.WebAPI.Database;
@@ -29,32 +30,25 @@ namespace YogaMo.WebAPI.Services
         {
             var query = _context.Client.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(request?.FirstName))
+            if (!string.IsNullOrWhiteSpace(request?.Name))
             {
-                query = query.Where(x => (x.FirstName.ToUpper().Trim() + " " + x.LastName.ToUpper().Trim()).Trim().Contains(request.FirstName.ToUpper()));
+                query = query.Where(x => (x.FirstName.ToUpper().Trim() + " " + x.LastName.ToUpper().Trim()).Trim().Contains(request.Name.ToUpper()));
             }
-            if (!string.IsNullOrWhiteSpace(request?.City))
+            if (request?.CityId != 0)
             {
-                var cityid = _context.City.Where(x => x.Name.ToUpper().Contains(request.City.ToUpper())).Select(x => x.CityId).SingleOrDefault();
-
-                query = query.Where(x => x.CityId.Equals(cityid));
+                query = query.Where(x => x.CityId == request.CityId);
             }
 
-            query = query.Include(x => x.City);
+            query = query.Include(x => x.City.Country);
 
             var list = _mapper.Map<List<Model.Client>>(query.ToList());
-
-            foreach (var item in list)
-            {
-                item.CityName = item.City.Name;
-            }
 
             return list;
         }
 
         public Model.Client Get(int id)
         {
-            var entity = _context.Client.Where(x => x.ClientId == id).Include(x => x.City).FirstOrDefault();
+            var entity = _context.Client.Where(x => x.ClientId == id).Include(x => x.City.Country).FirstOrDefault();
 
             return _mapper.Map<Model.Client>(entity);
         }
@@ -121,7 +115,7 @@ namespace YogaMo.WebAPI.Services
         public Model.Client Authenticate(string username, string password)
         {
             // checking if the user exists in the database
-            var user = _context.Client.FirstOrDefault(x => x.Username == username);
+            var user = _context.Client.Include(x => x.City.Country).FirstOrDefault(x => x.Username == username);
 
             if (user != null)
             {
@@ -150,7 +144,7 @@ namespace YogaMo.WebAPI.Services
         {
             var query = _context.Client.AsQueryable();
 
-            query = query.Where(x => x.ClientId == _currentUser.ClientId).Include(x=>x.City);
+            query = query.Where(x => x.ClientId == _currentUser.ClientId).Include(x => x.City.Country);
 
             var entity = query.FirstOrDefault();
 

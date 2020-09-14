@@ -6,9 +6,8 @@ namespace YogaMo.Model.Requests
 {
     public class ClientSearchRequest
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
-        public string City { get; set; } //or CityId ??
+        public int CityId { get; set; }
     }
 }

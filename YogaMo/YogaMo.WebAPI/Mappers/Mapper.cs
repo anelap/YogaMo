@@ -16,6 +16,7 @@ namespace YogaMo.WebAPI.Mappers
             // Create maps by CreateMap<from, to>().ReverseMap();
             CreateMap<Database.Instructor, Model.Instructor>().ReverseMap();
             CreateMap<Database.Instructor, InstructorsInsertRequest>().ReverseMap();
+            CreateMap<Database.Instructor, InstructorsUpdateRequest>().ReverseMap();
 
             CreateMap<Database.Client, Model.Client>().ReverseMap();
             CreateMap<Database.Client, ClientInsertRequest>().ReverseMap();

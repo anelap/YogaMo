@@ -70,18 +70,9 @@ namespace YogaMo.WebAPI.Services
         {
             var query = _context.Instructor.AsQueryable();
 
-            /*   if (!string.IsNullOrWhiteSpace(request?.FirstName) || !string.IsNullOrWhiteSpace(request?.LastName))
-               {
-                   query = query.Where(x => x.FirstName.ToUpper().Contains(request.FirstName.ToUpper()) || x.LastName.ToUpper().Contains(request.LastName.ToUpper()));
-               }*/
-
-            if (!string.IsNullOrWhiteSpace(request?.FirstName))
+            if (!string.IsNullOrWhiteSpace(request?.Name))
             {
-                query = query.Where(x => x.FirstName.ToUpper().Contains(request.FirstName.ToUpper()));
-            }
-            else if (!string.IsNullOrWhiteSpace(request?.LastName))
-            {
-                query = query.Where(x => x.LastName.ToUpper().Contains(request.LastName.ToUpper()));
+                query = query.Where(x => (x.FirstName.ToUpper().Trim() + " " + x.LastName.ToUpper().Trim()).Trim().Contains(request.Name.ToUpper()));
             }
 
             var list = query.ToList();
@@ -126,17 +117,17 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Instructor>(entity);
         }
 
-        public Model.Instructor Update(int id, InstructorsInsertRequest request)
+        public Model.Instructor Update(int id, InstructorsUpdateRequest request)
         {
             var entity = _context.Instructor.Find(id);
 
-            Mapper.Map<InstructorsInsertRequest, Database.Instructor>(request, entity); // Nota bene?
+            Mapper.Map<InstructorsUpdateRequest, Database.Instructor>(request, entity);
 
             if (!string.IsNullOrWhiteSpace(request.Password))
             {
                 if (request.Password != request.PasswordConfirmation)
                 {
-                    throw new Exception("Passwods don't match!");
+                    throw new UserException("Passwods don't match!");
                 }
                 entity.PasswordSalt = GenerateSalt();
                 entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);

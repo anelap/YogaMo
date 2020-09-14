@@ -14,7 +14,7 @@ namespace YogaMo.WebAPI.Services
         List<Model.Instructor> Get(InstructorsSearchRequest reuqest);
         Model.Instructor Get(int id);
         Model.Instructor Insert(InstructorsInsertRequest request);
-        Model.Instructor Update(int id, InstructorsInsertRequest request);
+        Model.Instructor Update(int id, InstructorsUpdateRequest request);
 
         List<Model.Yoga> GetYogaByInstructor(int id); //maybe include this?
 

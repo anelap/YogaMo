@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -49,7 +50,7 @@ namespace YogaMo.WebAPI.Services
         }
         public List<Model.Product> Get(ProductSearchRequest request)
         {
-            var query = _context.Product.AsQueryable();
+            var query = _context.Product.Include(x=>x.Category).AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request?.Name))
             {
@@ -62,11 +63,6 @@ namespace YogaMo.WebAPI.Services
 
             var list = query.ToList();
 
-            foreach(var item in list)
-            {
-                item.Photo = null;
-            }
-
             return _mapper.Map<List<Model.Product>>(list);
         }
 
@@ -74,8 +70,6 @@ namespace YogaMo.WebAPI.Services
         {
             var entity = _context.Product.Find(id);
             if (entity == null) throw new UserException("Product not found");
-
-            entity.Photo = null;
 
             return _mapper.Map<Model.Product>(entity);
         }
@@ -102,46 +96,5 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Product>(entity);
         }
 
-
-        #region Photos
-        public static Image CropImage(Image img, Rectangle cropArea)
-        {
-            Bitmap bmpImage = new Bitmap(img);
-            Bitmap bmpCrop = bmpImage.Clone(cropArea,
-            bmpImage.PixelFormat);
-            return (Image)(bmpCrop);
-        }
-
-        public static Image ResizeImage(Image imgToResize, Size size)
-        {
-            int sourceWidth = imgToResize.Width;
-            int sourceHeight = imgToResize.Height;
-
-            float nPercent = 0;
-            float nPercentW = 0;
-            float nPercentH = 0;
-
-            nPercentW = ((float)size.Width / (float)sourceWidth);
-            nPercentH = ((float)size.Height / (float)sourceHeight);
-
-            if (nPercentH < nPercentW)
-                nPercent = nPercentH;
-            else
-                nPercent = nPercentW;
-
-            int destWidth = (int)(sourceWidth * nPercent);
-            int destHeight = (int)(sourceHeight * nPercent);
-
-            Bitmap b = new Bitmap(destWidth, destHeight);
-            Graphics g = Graphics.FromImage((Image)b);
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            g.DrawImage(imgToResize, 0, 0, destWidth, destHeight);
-            g.Dispose();
-
-            return (Image)b;
-        }
-
-        #endregion
     }
 }
