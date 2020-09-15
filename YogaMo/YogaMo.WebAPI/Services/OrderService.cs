@@ -44,9 +44,9 @@ namespace YogaMo.WebAPI.Services
 
             foreach (var charge in paymentIntent.Charges)
             {
-                if(charge.Paid == true)
+                if (charge.Paid == true)
                 {
-                    Order.OrderStatus = Database.OrderStatus.Completed;
+                    Order.OrderStatus = Database.OrderStatus.Confirmed;
                     _context.SaveChanges();
                     return true;
                 }
@@ -73,10 +73,19 @@ namespace YogaMo.WebAPI.Services
             var OrderStatusEnum = (Database.OrderStatus)OrderStatusInt;
 
             var list = _context.Order
-                .Where(x=> request.OrderStatus == null || x.OrderStatus == OrderStatusEnum)
+                .Include(x => x.Client)
+                .Where(x => request.OrderStatus == null || x.OrderStatus == OrderStatusEnum)
+                .OrderByDescending(x => x.Date)
                 .ToList();
 
-            return _mapper.Map<List<Model.Order>>(list);
+            var listModel = _mapper.Map<List<Model.Order>>(list);
+
+            foreach (var item in listModel)
+            {
+                item.Client.ProfilePicture = null;
+            }
+
+            return listModel;
         }
 
         public Model.Order Get(int id)

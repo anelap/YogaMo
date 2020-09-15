@@ -9,6 +9,7 @@ namespace YogaMo.WebAPI.Database
     {
         New,
         Processing,
+        Confirmed,
         Completed,
         Canceled
     }

@@ -17,6 +17,11 @@ namespace YogaMo.Model
         public int? CityId { get; set; }
         public byte[] ProfilePicture { get; set; }
 
-        public string NameLastname => FirstName + " " + LastName;
+        public string FullName => FirstName + " " + LastName;
+
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 }

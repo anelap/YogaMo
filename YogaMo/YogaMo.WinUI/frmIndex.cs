@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YogaMo.WinUI.Clients;
 using YogaMo.WinUI.Instructors;
+using YogaMo.WinUI.Orders;
 using YogaMo.WinUI.Products;
 using YogaMo.WinUI.YogaClasses;
 
@@ -69,6 +70,14 @@ namespace YogaMo.WinUI
         {
             frmProductDetails frm = new frmProductDetails();
             frm.ShowDialog();
+        }
+
+        private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmOrders frm = new frmOrders();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
         }
     }
 }

@@ -42,7 +42,7 @@
                 </StackLayout>
                 <StackLayout Padding="0,0,0,0" Grid.Row="1" Grid.Column="1" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Vertical">
                     <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical" Spacing="10">
-                        <Label Text="{Binding User.NameLastname}"/>
+                        <Label Text="{Binding User.FullName}"/>
                         <Label Text="{Binding User.Username}"/>
                         <Label Text="{Binding User.Email}"/>
                         <Label Text="{Binding User.City.Country.Name}"/>

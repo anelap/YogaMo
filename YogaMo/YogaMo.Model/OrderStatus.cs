@@ -4,6 +4,7 @@
     {
         New,
         Processing,
+        Confirmed,
         Completed,
         Canceled
     }

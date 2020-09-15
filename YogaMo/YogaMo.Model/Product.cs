@@ -17,5 +17,10 @@ namespace YogaMo.Model
         public string PriceStr => "$" + Price.ToString("0.00");
 
         public double AverageRating { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
