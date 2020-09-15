@@ -36,6 +36,7 @@ namespace YogaMo.WebAPI.Security
 
             string currentUsername = null;
             string currentFirstName = null;
+            string currentRole = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
@@ -50,6 +51,7 @@ namespace YogaMo.WebAPI.Security
                 {
                     currentUsername = instructor.Username;
                     currentFirstName = instructor.FirstName;
+                    currentRole = "Instructor";
                     _instructorService.SetCurrentInstructor(instructor);
                 }
                 else
@@ -58,6 +60,7 @@ namespace YogaMo.WebAPI.Security
                     if (client != null) {
                         currentUsername = client.Username;
                         currentFirstName = client.FirstName;
+                        currentRole = "Client";
                         _clientService.SetCurrentClient(client);
                     }
                 }
@@ -75,7 +78,7 @@ namespace YogaMo.WebAPI.Security
                 new Claim(ClaimTypes.Name, currentFirstName),
             };
 
-            // šta su claim-ovi?
+            claims.Add(new Claim(ClaimTypes.Role, currentRole));
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

@@ -29,13 +29,14 @@ namespace YogaMo.WebAPI.Services
             _context.SaveChanges();
         }
 
-        public List<Model.Yoga> Get()
+        public List<Model.Yoga> Get(YogaSearchRequest request)
         {
-            /*  var list = _context.Yoga.ToList();
-
-              return _mapper.Map<List<Model.Yoga>>(list);*/
-
             var query = _context.Yoga.AsQueryable();
+
+            if (!string.IsNullOrEmpty(request?.Name))
+            {
+                query = query.Where(x => x.Name.ToUpper().Contains(request.Name.ToUpper()));
+            }
 
             query = query.Include(x => x.Instructor);
 

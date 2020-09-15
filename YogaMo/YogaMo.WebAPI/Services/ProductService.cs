@@ -33,12 +33,6 @@ namespace YogaMo.WebAPI.Services
 
         List<Model.Product> IProductService.GetAvailableProducts()
         {
-            /* var query = _context.Product.AsQueryable();
-
-             query = query.Where(x => x.Status == true);
-
-             var list = query.ToList();*/
-
             List<Database.Product> list = _context.Product.Where(x => x.Status == true).ToList();
 
             foreach(var item in list)

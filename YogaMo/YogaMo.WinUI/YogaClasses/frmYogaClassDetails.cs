@@ -68,6 +68,9 @@ namespace YogaMo.WinUI.YogaClasses
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            if (!this.ValidateChildren())
+                return;
+
             request.YogaId = (cmbYoga.SelectedItem as Model.Yoga).YogaId;
             request.Time = dtpFrom.Value.ToString("HH:mm") + "-" + dtpTo.Value.ToString("HH:mm");
             request.Day = cmbDay.Text;
@@ -104,5 +107,19 @@ namespace YogaMo.WinUI.YogaClasses
             cmbDay.DataSource = DaysOfWeek;
         }
 
+        private void cmbDay_Validating(object sender, CancelEventArgs e)
+        {
+            var element = (sender as ComboBox);
+            if (element.SelectedItem == null)
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Required);
+            }
+            else
+            {
+                errorProvider1.SetError(element, null);
+                return;
+            }
+            e.Cancel = true;
+        }
     }
 }

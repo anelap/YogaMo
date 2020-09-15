@@ -27,9 +27,9 @@ namespace YogaMo.WebAPI.Controllers
       
 
         [HttpGet]
-        public ActionResult<List<Model.Yoga>> Get()
+        public ActionResult<List<Model.Yoga>> Get([FromQuery] YogaSearchRequest request)
         {
-            return _service.Get();
+            return _service.Get(request);
         }
 
 

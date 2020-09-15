@@ -32,18 +32,5 @@ namespace YogaMo.Mobile.Views
             }
         }
 
-        //override protected void OnCurrentPageChanged()
-        //{
-        //    if (this.CurrentPage.Title == "Cart")
-        //    {
-        //        var page = ((CartPage)this.CurrentPage);
-        //        var VM = page.BindingContext as CartViewModel;
-        //        if (VM != null)
-        //        {
-        //            VM.Init();
-        //        }
-        //    }
-
-        //}
     }
 }

@@ -13,7 +13,6 @@ namespace YogaMo.WebAPI.Services
         List<Model.Rating> Get(RatingSearchRequest request);
         Model.Rating Get(int id);
         Model.Rating GetByProductAndClient(int productId, int clientId);
-        // public decimat GetAverageRating(int productId)
 
         Model.Rating Update(int id, RatingInsertRequest request);
         Model.Rating Insert(RatingInsertRequest request);

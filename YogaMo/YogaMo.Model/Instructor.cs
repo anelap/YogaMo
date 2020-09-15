@@ -14,8 +14,12 @@ namespace YogaMo.Model
         public string Title { get; set; }
 
         public byte[] ProfilePicture { get; set; }
-        // public virtual ICollection<Yoga> Yoga { get; set; }
         public string Name => FirstName + " " + LastName;
+
+        public override string ToString()
+        {
+            return Name;
+        }
 
     }
 }

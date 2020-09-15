@@ -46,12 +46,13 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvClients);
-            this.groupBox1.Location = new System.Drawing.Point(15, 77);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(817, 328);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 50, 3, 3);
+            this.groupBox1.Size = new System.Drawing.Size(834, 418);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Clients";
             // 
             // dgvClients
             // 
@@ -65,14 +66,14 @@
             this.Email,
             this.Phone});
             this.dgvClients.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvClients.Location = new System.Drawing.Point(3, 18);
+            this.dgvClients.Location = new System.Drawing.Point(3, 65);
             this.dgvClients.MultiSelect = false;
             this.dgvClients.Name = "dgvClients";
             this.dgvClients.ReadOnly = true;
             this.dgvClients.RowHeadersWidth = 51;
             this.dgvClients.RowTemplate.Height = 24;
             this.dgvClients.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvClients.Size = new System.Drawing.Size(811, 307);
+            this.dgvClients.Size = new System.Drawing.Size(828, 350);
             this.dgvClients.TabIndex = 0;
             this.dgvClients.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvClients_CellMouseDoubleClick);
             // 

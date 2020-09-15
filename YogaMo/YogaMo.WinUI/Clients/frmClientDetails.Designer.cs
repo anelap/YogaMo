@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,6 +48,8 @@
             this.label9 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.cmbCity = new System.Windows.Forms.ComboBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtFirstName
@@ -55,6 +58,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(384, 22);
             this.txtFirstName.TabIndex = 0;
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // label1
             // 
@@ -80,6 +84,7 @@
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(384, 22);
             this.txtLastName.TabIndex = 2;
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
             // 
             // label3
             // 
@@ -96,6 +101,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(384, 22);
             this.txtEmail.TabIndex = 4;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // label4
             // 
@@ -112,6 +118,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(384, 22);
             this.txtPhone.TabIndex = 6;
+            this.txtPhone.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhone_Validating);
             // 
             // label5
             // 
@@ -128,6 +135,7 @@
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(384, 22);
             this.txtUsername.TabIndex = 8;
+            this.txtUsername.Validating += new System.ComponentModel.CancelEventHandler(this.txtUsername_Validating);
             // 
             // label6
             // 
@@ -145,6 +153,7 @@
             this.txtPassword.Size = new System.Drawing.Size(175, 22);
             this.txtPassword.TabIndex = 10;
             this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
             // 
             // label7
             // 
@@ -162,6 +171,7 @@
             this.txtPassConfirm.Size = new System.Drawing.Size(175, 22);
             this.txtPassConfirm.TabIndex = 12;
             this.txtPassConfirm.UseSystemPasswordChar = true;
+            this.txtPassConfirm.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassConfirm_Validating);
             // 
             // label8
             // 
@@ -206,6 +216,11 @@
             this.cmbCity.Name = "cmbCity";
             this.cmbCity.Size = new System.Drawing.Size(165, 24);
             this.cmbCity.TabIndex = 19;
+            this.cmbCity.Validating += new System.ComponentModel.CancelEventHandler(this.cmbCity_Validating);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // frmClientDetails
             // 
@@ -236,6 +251,7 @@
             this.Name = "frmClientDetails";
             this.Text = "Client Details";
             this.Load += new System.EventHandler(this.frmClientDetails_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,5 +278,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.ComboBox cmbCity;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,7 +41,9 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.cbActive = new System.Windows.Forms.CheckBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtName
@@ -49,6 +52,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(175, 22);
             this.txtName.TabIndex = 0;
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // label1
             // 
@@ -83,6 +87,7 @@
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(175, 22);
             this.txtPrice.TabIndex = 6;
+            this.txtPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtPrice_Validating);
             // 
             // label4
             // 
@@ -99,6 +104,7 @@
             this.txtQuantity.Name = "txtQuantity";
             this.txtQuantity.Size = new System.Drawing.Size(175, 22);
             this.txtQuantity.TabIndex = 4;
+            this.txtQuantity.Validating += new System.ComponentModel.CancelEventHandler(this.txtQuantity_Validating);
             // 
             // btnSave
             // 
@@ -134,6 +140,7 @@
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(175, 24);
             this.cmbCategory.TabIndex = 20;
+            this.cmbCategory.Validating += new System.ComponentModel.CancelEventHandler(this.cmbCategory_Validating);
             // 
             // cbActive
             // 
@@ -144,6 +151,10 @@
             this.cbActive.TabIndex = 21;
             this.cbActive.Text = "Active";
             this.cbActive.UseVisualStyleBackColor = true;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // frmProductDetails
             // 
@@ -166,6 +177,7 @@
             this.Text = "Product Details";
             this.Load += new System.EventHandler(this.frmProductDetails_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -185,5 +197,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.CheckBox cbActive;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

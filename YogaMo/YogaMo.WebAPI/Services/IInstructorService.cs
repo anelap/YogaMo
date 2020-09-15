@@ -16,7 +16,7 @@ namespace YogaMo.WebAPI.Services
         Model.Instructor Insert(InstructorsInsertRequest request);
         Model.Instructor Update(int id, InstructorsUpdateRequest request);
 
-        List<Model.Yoga> GetYogaByInstructor(int id); //maybe include this?
+        List<Model.Yoga> GetYogaByInstructor(int id);
 
         // Authentication 
         Model.Instructor Authenticate(string username, string password);
@@ -25,20 +25,6 @@ namespace YogaMo.WebAPI.Services
         Model.Instructor GetCurrentInstructor();
         void SetCurrentInstructor(Model.Instructor user);
         Model.Instructor MyProfile();
-
-        // show yoga classes held by instructor?
-
-        // TODO: delete
-
-        /* void Add<T>(T entity) where T : class;
-         void Delete<T>(T entity) where T : class;
-         Task<bool> SaveChangesAsync();
-
-
-         Task<Instructor[]> GetAllInstructorsAsync(bool includeClasses = false);
-         Task<Instructor[]> GetInstructorAsync(string name, bool includeClasses = false);
-         Task<Instructor> GetInstructorByIdAsync(int id);
-         Task<Yoga[]> GetYogas(int id);*/
 
     }
 }

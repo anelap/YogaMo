@@ -12,6 +12,7 @@ using YogaMo.WinUI.Instructors;
 using YogaMo.WinUI.Orders;
 using YogaMo.WinUI.Products;
 using YogaMo.WinUI.YogaClasses;
+using YogaMo.WinUI.Yogas;
 
 namespace YogaMo.WinUI
 {
@@ -78,6 +79,34 @@ namespace YogaMo.WinUI
             frm.MdiParent = this;
             frm.WindowState = FormWindowState.Maximized;
             frm.Show();
+        }
+
+        private void logoutLabel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            var frm = new frmLogin();
+            if(frm.ShowDialog() == DialogResult.OK)
+            {
+                this.Show();
+            }
+            else
+            {
+                Application.Exit();
+            }
+        }
+
+        private void searchYogaToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            frmYogas frm = new frmYogas();
+            frm.MdiParent = this;
+            frm.WindowState = FormWindowState.Maximized;
+            frm.Show();
+        }
+
+        private void newYogaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmYogaDetails frm = new frmYogaDetails();
+            frm.ShowDialog();
         }
     }
 }

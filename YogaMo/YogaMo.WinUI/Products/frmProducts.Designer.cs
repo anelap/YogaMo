@@ -100,7 +100,6 @@
             this.groupBox1.Controls.Add(this.btnNewProduct);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 30, 3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 50, 3, 3);
             this.groupBox1.Size = new System.Drawing.Size(844, 487);

@@ -29,14 +29,13 @@ namespace YogaMo.WebAPI.Services
 
         public Model.Instructor Authenticate(string username, string password)
         {
-            // checking if the user exists in the database
             var user = _context.Instructor.FirstOrDefault(x => x.Username == username);
 
             if (user != null)
             {
                 var newHash = GenerateHash(user.PasswordSalt, password);
 
-                if (newHash == user.PasswordHash) // if the password is correct
+                if (newHash == user.PasswordHash) 
                 {
                     return _mapper.Map<Model.Instructor>(user);
                 }
@@ -88,7 +87,7 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Instructor>(entity);
         }
 
-        public List<Model.Yoga> GetYogaByInstructor(int id) // maybe include this??
+        public List<Model.Yoga> GetYogaByInstructor(int id) 
         {
             var query = _context.Yoga.AsQueryable();
 
@@ -111,7 +110,7 @@ namespace YogaMo.WebAPI.Services
             entity.PasswordSalt = GenerateSalt();
             entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
 
-            _context.Instructor.Add(entity); // nota bene da treba i Instructor
+            _context.Instructor.Add(entity); 
             _context.SaveChanges();
 
             return _mapper.Map<Model.Instructor>(entity);
@@ -150,6 +149,9 @@ namespace YogaMo.WebAPI.Services
 
         public Model.Instructor MyProfile()
         {
+            if (_currentUser == null)
+                return null;
+
             var query = _context.Instructor.AsQueryable();
 
             query = query.Where(x => x.InstructorId == _currentUser.InstructorId);
@@ -159,52 +161,5 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Instructor>(entity);
         }
 
-        /*   public void Add<T>(T entity) where T : class
-           {
-               _context.Add(entity);
-           }
-
-           public void Delete<T>(T entity) where T : class
-           {
-               _context.Remove(entity);
-           }
-
-           public async Task<Instructor[]> GetAllInstructorsAsync(bool includeClasses = false)
-           {
-               IQueryable<Instructor> query = _context.Instructor;
-
-               query = query.OrderByDescending(c => c.FirstName);
-
-               return await query.ToArrayAsync();
-           }
-
-           public async Task<Instructor[]> GetInstructorAsync(string name, bool includeClasses = false)
-           {
-               IQueryable<Instructor> query = _context.Instructor.Where(x => x.FirstName.ToUpper().Contains(name) || x.LastName.ToUpper().Contains(name));
-
-               return await query.ToArrayAsync();
-           }
-
-           public async Task<Instructor> GetInstructorByIdAsync(int id)
-           {
-               var query = _context.Instructor.Where(x => x.InstructorId.Equals(id));
-
-               return await query.FirstOrDefaultAsync();
-           }
-
-           public async Task<Yoga[]> GetYogas(int id)
-           {
-               var query = _context.Yoga;
-
-               var yogas = query.Where(x => x.InstructorId.Equals(id)).OrderByDescending(y => y.Name);
-
-               return await yogas.ToArrayAsync();
-           }
-
-           public async Task<bool> SaveChangesAsync()
-           {
-               // returns true if at least one row was changed
-               return (await _context.SaveChangesAsync()) > 0;
-           }*/
     }
 }

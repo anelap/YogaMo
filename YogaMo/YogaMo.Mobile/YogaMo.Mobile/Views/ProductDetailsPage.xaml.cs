@@ -53,18 +53,7 @@ namespace YogaMo.Mobile.Views
             if (orderItem != null)
             {
                 await Application.Current.MainPage.DisplayAlert("Success", "Item successfully added to cart", "OK");
-                //var masterPage = this.Parent.Parent as MainPage;
                 await Navigation.PopAsync();
-
-
-                //foreach (var childPage in masterPage.Children)
-                //{
-                //    if(childPage.Title == "Cart")
-                //    {
-                //        masterPage.CurrentPage = childPage;
-                //        break;
-                //    }
-                //}
             }
 
         }

@@ -45,6 +45,9 @@ namespace YogaMo.Mobile.ViewModels
             {
                 APIService.CurrentUser = await _serviceClient.Get<Model.Client>(null, "MyProfile");
 
+                if (APIService.CurrentUser == null)
+                    return;
+
                 await SecureStorage.SetAsync("username", Username);
                 await SecureStorage.SetAsync("password", Password);
 

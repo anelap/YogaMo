@@ -69,5 +69,96 @@ namespace YogaMo.WinUI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email address format is not valid..
+        /// </summary>
+        internal static string Validation_EmailNotValid {
+            get {
+                return ResourceManager.GetString("Validation_EmailNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length must be shorter than {0} characters..
+        /// </summary>
+        internal static string Validation_MaximumLength {
+            get {
+                return ResourceManager.GetString("Validation_MaximumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value must be {0} or less..
+        /// </summary>
+        internal static string Validation_MaximumNumeric {
+            get {
+                return ResourceManager.GetString("Validation_MaximumNumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length must be at least {0} characters..
+        /// </summary>
+        internal static string Validation_MinimumLength {
+            get {
+                return ResourceManager.GetString("Validation_MinimumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value must be {0} or greater..
+        /// </summary>
+        internal static string Validation_MinimumNumeric {
+            get {
+                return ResourceManager.GetString("Validation_MinimumNumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The field requires a numeric value..
+        /// </summary>
+        internal static string Validation_Numeric {
+            get {
+                return ResourceManager.GetString("Validation_Numeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The passwords must match..
+        /// </summary>
+        internal static string Validation_PasswordNotMatching {
+            get {
+                return ResourceManager.GetString("Validation_PasswordNotMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The phone number must be in the following format: 061999999 or +38761999999.
+        /// </summary>
+        internal static string Validation_PhoneNotValid {
+            get {
+                return ResourceManager.GetString("Validation_PhoneNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This field is required..
+        /// </summary>
+        internal static string Validation_Required {
+            get {
+                return ResourceManager.GetString("Validation_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap YogaMo {
+            get {
+                object obj = ResourceManager.GetObject("YogaMo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

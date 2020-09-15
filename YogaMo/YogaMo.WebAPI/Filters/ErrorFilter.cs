@@ -24,10 +24,6 @@ namespace YogaMo.WebAPI.Filters
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
-            /*  var list = context.ModelState.Where(x => x.Value.Errors.Count > 0).ToDictionary(x => x.Key, y => y.Value.Errors.Select(z => z.ErrorMessage));*/
-
-            //  context.Result = new JsonResult(list);
-
             context.Result = new JsonResult(context.ModelState);
         }
     }

@@ -11,8 +11,6 @@ namespace YogaMo.WebAPI.Services
     {
         List<Model.Order> Get(OrderSearchRequest request);
         Model.Order Get(int id);
-        // List<Model.OrderItem> GetOrderItems(int orderId)
-
         List<Model.Order> GetByDate(int day, int month, int year);
         List<Model.Order> GetByClient(int id);
         Model.Order Insert(OrderInsertRequest request);

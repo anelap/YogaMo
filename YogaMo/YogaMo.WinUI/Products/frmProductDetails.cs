@@ -74,6 +74,9 @@ namespace YogaMo.WinUI.Products
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
+            if (!this.ValidateChildren())
+                return;
+
             request.Name = txtName.Text;
             request.Price = decimal.Parse(txtPrice.Text);
             request.QuantityStock = int.Parse(txtQuantity.Text);
@@ -111,6 +114,94 @@ namespace YogaMo.WinUI.Products
                     pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
                 }
             }
+        }
+
+        private void txtName_Validating(object sender, CancelEventArgs e)
+        {
+            var element = (sender as TextBox);
+            if (string.IsNullOrEmpty(element.Text))
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Required);
+            }
+            else if (element.Text.Length > 50)
+            {
+                errorProvider1.SetError(element, String.Format(Properties.Resources.Validation_MaximumLength, 50));
+            }
+            else
+            {
+                errorProvider1.SetError(element, null);
+                return;
+            }
+            e.Cancel = true;
+        }
+
+        private void cmbCategory_Validating(object sender, CancelEventArgs e)
+        {
+            var element = (sender as ComboBox);
+            if (element.SelectedItem == null)
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Required);
+            }
+            else
+            {
+                errorProvider1.SetError(element, null);
+                return;
+            }
+            e.Cancel = true;
+        }
+
+        private void txtQuantity_Validating(object sender, CancelEventArgs e)
+        {
+            var element = (sender as TextBox);
+            if (string.IsNullOrEmpty(element.Text))
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Required);
+            }
+            else if (!int.TryParse(element.Text, out int Quantity))
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Numeric);
+            }
+            else if (Quantity < 0)
+            {
+                errorProvider1.SetError(element, String.Format(Properties.Resources.Validation_MinimumNumeric, 0));
+            }
+            else if (Quantity > 99999)
+            {
+                errorProvider1.SetError(element, String.Format(Properties.Resources.Validation_MaximumNumeric, 99999));
+            }
+            else
+            {
+                errorProvider1.SetError(element, null);
+                return;
+            }
+            e.Cancel = true;
+        }
+
+        private void txtPrice_Validating(object sender, CancelEventArgs e)
+        {
+            var element = (sender as TextBox);
+            if (string.IsNullOrEmpty(element.Text))
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Required);
+            }
+            else if (!decimal.TryParse(element.Text, out decimal Price))
+            {
+                errorProvider1.SetError(element, Properties.Resources.Validation_Numeric);
+            }
+            else if (Price < 0.10m)
+            {
+                errorProvider1.SetError(element, String.Format(Properties.Resources.Validation_MinimumNumeric, 0.10));
+            }
+            else if (Price > 999999.99m)
+            {
+                errorProvider1.SetError(element, String.Format(Properties.Resources.Validation_MaximumNumeric, 999999.99m));
+            }
+            else
+            {
+                errorProvider1.SetError(element, null);
+                return;
+            }
+            e.Cancel = true;
         }
     }
 }

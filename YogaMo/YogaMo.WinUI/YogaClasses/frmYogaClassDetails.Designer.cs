@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -38,6 +39,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbYoga = new System.Windows.Forms.ComboBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -75,11 +78,13 @@
             // 
             // cmbDay
             // 
+            this.cmbDay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDay.FormattingEnabled = true;
             this.cmbDay.Location = new System.Drawing.Point(27, 125);
             this.cmbDay.Name = "cmbDay";
-            this.cmbDay.Size = new System.Drawing.Size(159, 24);
+            this.cmbDay.Size = new System.Drawing.Size(163, 24);
             this.cmbDay.TabIndex = 19;
+            this.cmbDay.Validating += new System.ComponentModel.CancelEventHandler(this.cmbDay_Validating);
             // 
             // dtpFrom
             // 
@@ -87,7 +92,8 @@
             this.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFrom.Location = new System.Drawing.Point(28, 56);
             this.dtpFrom.Name = "dtpFrom";
-            this.dtpFrom.Size = new System.Drawing.Size(63, 22);
+            this.dtpFrom.ShowUpDown = true;
+            this.dtpFrom.Size = new System.Drawing.Size(78, 22);
             this.dtpFrom.TabIndex = 20;
             // 
             // dtpTo
@@ -96,7 +102,8 @@
             this.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpTo.Location = new System.Drawing.Point(112, 56);
             this.dtpTo.Name = "dtpTo";
-            this.dtpTo.Size = new System.Drawing.Size(63, 22);
+            this.dtpTo.ShowUpDown = true;
+            this.dtpTo.Size = new System.Drawing.Size(78, 22);
             this.dtpTo.TabIndex = 21;
             // 
             // label3
@@ -119,11 +126,17 @@
             // 
             // cmbYoga
             // 
+            this.cmbYoga.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbYoga.FormattingEnabled = true;
             this.cmbYoga.Location = new System.Drawing.Point(27, 183);
             this.cmbYoga.Name = "cmbYoga";
-            this.cmbYoga.Size = new System.Drawing.Size(159, 24);
+            this.cmbYoga.Size = new System.Drawing.Size(163, 24);
             this.cmbYoga.TabIndex = 23;
+            this.cmbYoga.Validating += new System.ComponentModel.CancelEventHandler(this.cmbDay_Validating);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // frmYogaClassDetails
             // 
@@ -144,6 +157,7 @@
             this.Name = "frmYogaClassDetails";
             this.Text = "Yoga class details";
             this.Load += new System.EventHandler(this.frmYogaDetails_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,5 +174,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbYoga;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

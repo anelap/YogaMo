@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YogaMo.WinUI.Clients;
+using YogaMo.WinUI.Helper;
 
 namespace YogaMo.WinUI
 {
@@ -17,7 +18,14 @@ namespace YogaMo.WinUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmIndex());
+
+            FormUtils.SetDefaultIcon();
+
+            var frm = new frmLogin();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new frmIndex());
+            }
         }
     }
 }

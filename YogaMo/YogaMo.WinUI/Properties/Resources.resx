@@ -121,4 +121,34 @@
   <data name="default_profile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\default_profile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Validation_EmailNotValid" xml:space="preserve">
+    <value>The email address format is not valid.</value>
+  </data>
+  <data name="Validation_MaximumLength" xml:space="preserve">
+    <value>Length must be shorter than {0} characters.</value>
+  </data>
+  <data name="Validation_MaximumNumeric" xml:space="preserve">
+    <value>The value must be {0} or less.</value>
+  </data>
+  <data name="Validation_MinimumLength" xml:space="preserve">
+    <value>Length must be at least {0} characters.</value>
+  </data>
+  <data name="Validation_MinimumNumeric" xml:space="preserve">
+    <value>The value must be {0} or greater.</value>
+  </data>
+  <data name="Validation_Numeric" xml:space="preserve">
+    <value>The field requires a numeric value.</value>
+  </data>
+  <data name="Validation_PasswordNotMatching" xml:space="preserve">
+    <value>The passwords must match.</value>
+  </data>
+  <data name="Validation_PhoneNotValid" xml:space="preserve">
+    <value>The phone number must be in the following format: 061999999 or +38761999999</value>
+  </data>
+  <data name="Validation_Required" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="YogaMo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\YogaMo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

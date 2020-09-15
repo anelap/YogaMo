@@ -111,8 +111,6 @@ namespace YogaMo.WebAPI.Services
                 }
             }
 
-            // in case we haven't rated any products positively
-
             var ListOfAllProducts = _context.Product
                                         .Where(x => x.QuantityStock > 0)
                                         .Where(x => x.ProductId != ProductIdToExclude)

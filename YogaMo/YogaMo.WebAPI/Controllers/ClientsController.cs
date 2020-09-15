@@ -49,7 +49,7 @@ namespace YogaMo.WebAPI.Controllers
 
 
         [HttpGet("MyProfile")]
-        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
+        [Authorize(AuthenticationSchemes = "BasicAuthentication", Roles = "Client")]
         public Model.Client MyProfile()
         {
             return _service.MyProfile();

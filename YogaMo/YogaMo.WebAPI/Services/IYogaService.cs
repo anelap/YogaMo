@@ -8,7 +8,7 @@ namespace YogaMo.WebAPI.Services
 {
     public interface IYogaService
     {
-        List<Model.Yoga> Get();
+        List<Model.Yoga> Get(YogaSearchRequest request);
         Model.Yoga Get(int id);
         Model.Yoga Insert(YogaInsertRequest request);
         Model.Yoga Update(int id, YogaInsertRequest request);
