@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:YogaMo.Mobile.ViewModels" xmlns:model="clr-namespace:YogaMo.Model;assembly=YogaMo.Model" x:DataType="viewmodels:ScheduleViewModel"
              mc:Ignorable="d"
              x:Class="YogaMo.Mobile.Views.SchedulePage"
              Title="{Binding Title}">
@@ -15,7 +15,7 @@
 
         <ListView  ItemsSource="{Binding YogaClasses}">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:YogaClass">
                     <ViewCell>
                         <StackLayout Padding="10" HorizontalOptions="FillAndExpand">
                             <Label Text="{Binding Yoga.Name}" 
@@ -30,7 +30,7 @@
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="13" />
-                                <Label Text="{Binding Yoga.Instructor.Name}" 
+                                <Label Text="{Binding Instructor.Name}" 
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="13" />

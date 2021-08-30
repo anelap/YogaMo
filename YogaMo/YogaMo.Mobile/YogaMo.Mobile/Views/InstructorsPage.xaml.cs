@@ -18,7 +18,7 @@ namespace YogaMo.Mobile.Views
         public InstructorsPage()
         {
             InitializeComponent();
-            BindingContext = VM = new InstructorsViewModel();
+            BindingContext = VM = new InstructorsViewModel(Navigation);
         }
 
         protected async override void OnAppearing()
@@ -28,15 +28,5 @@ namespace YogaMo.Mobile.Views
 
         }
 
-        private void ToolbarItem_Clicked(object sender, EventArgs e)
-        {
-            APIService.CurrentUser = null;
-            APIService.Username = null;
-            APIService.Password = null;
-
-            SecureStorage.Remove("username");
-            SecureStorage.Remove("password");
-            Application.Current.MainPage = new LoginPage();
-        }
     }
 }

@@ -2,23 +2,23 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:YogaMo.Mobile.Converters" xmlns:viewmodels="clr-namespace:YogaMo.Mobile.ViewModels" xmlns:model="clr-namespace:YogaMo.Model;assembly=YogaMo.Model"
              mc:Ignorable="d"
              x:Class="YogaMo.Mobile.Views.InstructorsPage"
-             Title="{Binding Title}">
+             x:DataType="viewmodels:InstructorsViewModel"
+             Title="{Binding Title}"
+             x:Name="Instructors_Page">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ImageConverter x:Key="imgConv"></local:ImageConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Logout" Clicked="ToolbarItem_Clicked" IconImageSource="icon_logout.png" />
-    </ContentPage.ToolbarItems>
-    <StackLayout Orientation="Vertical" Padding="10">
+    
+    <StackLayout Orientation="Vertical" Padding="10" >
 
         <ListView  ItemsSource="{Binding Instructors}">
             <ListView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="model:Instructor">
                     <ViewCell>
                         <StackLayout Padding="10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                             <StackLayout Orientation="Horizontal">
@@ -56,6 +56,13 @@
                                 LineBreakMode="NoWrap"
                                 Style="{DynamicResource ListItemDetailTextStyle}"
                                 FontSize="16" VerticalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Button
+                                        Text="Send Message"
+                                        Command="{Binding Path=BindingContext.SendMessageCommand, Source={x:Reference Instructors_Page}}" 
+                                        
+                                        CommandParameter="{Binding .}"/>
                                 </StackLayout>
 
                             </StackLayout>

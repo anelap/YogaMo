@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:YogaMo.Mobile.ViewModels" xmlns:models="clr-namespace:YogaMo.Mobile.Models"
+             mc:Ignorable="d"
+             x:Class="YogaMo.Mobile.Views.ChatPage"
+             x:DataType="viewmodels:ChatViewModel"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+
+        <ScrollView Padding="5" x:Name="MessagesScrollView">
+            <StackLayout>
+
+                <CollectionView ItemsSource="{Binding MessagesList}" HorizontalOptions="Fill" HeightRequest="560" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PNMessage">
+
+                            <StackLayout Orientation="Vertical" Padding="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <StackLayout >
+                                        <Label Text="{Binding User}" FontSize="14" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                    <StackLayout >
+                                        <Label Text="{Binding Date}" FontSize="13" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Label Text="{Binding Content}"/>
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Entry Text="{Binding NewMessage}" Keyboard="Chat" Completed="Entry_Completed" Placeholder="Enter your message..." MaxLength="160"/>
+                <Button Text="Send" x:Name="SendBtn" Clicked="Button_Clicked"/>
+            </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
