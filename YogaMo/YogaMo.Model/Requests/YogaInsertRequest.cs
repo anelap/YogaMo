@@ -10,7 +10,6 @@ namespace YogaMo.Model.Requests
         [Required]
         public string Name { get; set; }
         [Required]
-        public int InstructorId { get; set; }
         public string Description { get; set; }
     }
 }

@@ -10,6 +10,11 @@ namespace YogaMo.Model
         public int? YogaId { get; set; }
         public Yoga Yoga { get; set; }
         public string Day { get; set; }
-        public string Time { get; set; }
+        public TimeSpan TimeFrom { get; set; }
+        public TimeSpan TimeTo { get; set; }
+        public string Time => TimeFrom.ToString(@"hh\:mm") + "-" + TimeTo.ToString(@"hh\:mm");
+
+        public Instructor Instructor { get; set; }
+        public int? InstructorId { get; set; }
     }
 }

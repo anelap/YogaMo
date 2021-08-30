@@ -8,9 +8,7 @@ namespace YogaMo.Model
     {
         public int YogaId { get; set; }
         public string Name { get; set; }
-        public Instructor Instructor { get; set; }
         public string Description { get; set; }
-        public int InstructorId { get; set; }
 
         public override string ToString()
         {

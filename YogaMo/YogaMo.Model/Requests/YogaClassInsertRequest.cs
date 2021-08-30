@@ -12,6 +12,8 @@ namespace YogaMo.Model.Requests
         [Required]
         public string Day { get; set; }
         [Required]
-        public string Time { get; set; }
+        public TimeSpan TimeFrom { get; set; }
+        [Required]
+        public TimeSpan TimeTo { get; set; }
     }
 }

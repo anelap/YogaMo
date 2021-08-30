@@ -10,7 +10,7 @@ namespace YogaMo.Model
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Username { get; set; }
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
         public string Title { get; set; }
 
         public byte[] ProfilePicture { get; set; }
