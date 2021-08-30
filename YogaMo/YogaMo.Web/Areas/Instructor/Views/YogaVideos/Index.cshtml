@@ -1,0 +1,40 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.YogaVideo>
+
+@{
+    ViewData["Title"] = "Yoga Videos";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.YoutubeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThumbnailFileName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a href="@item.YoutubeID" target="_blank">@item.YoutubeID</a>
+            </td>
+            <td>
+                <img src="~/thumbs/@item.ThumbnailFileName"
+                     height="100"
+                     asp-append-version="true" />
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-teal">Edit</a> &nbsp;
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

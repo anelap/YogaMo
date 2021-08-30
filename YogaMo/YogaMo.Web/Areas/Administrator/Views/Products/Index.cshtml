@@ -1,0 +1,87 @@
+﻿@model ProductsIndexVM
+
+@{
+    ViewData["Title"] = "Products";
+
+}
+
+@section SearchArea {
+    <div class="card">
+        <div class="card-body">
+            <h4>
+                Filter products
+            </h4>
+            <form method="get" class="d-inline-block col-md-4">
+                <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control col-md-9 d-inline-block" onchange="this.form.submit();" >
+                    <option value="">All products</option>
+                </select><div class="col-md-3 d-inline-block align-top">
+                    <button class="btn btn-primary w-100" hidden>Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Quantity in stock
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Category
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Rows)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityStock)
+                </td>
+                <td>
+                    $ @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @if (item.Photo == null)
+                    {
+                        <img class="card-img-top" src="http://placehold.it/700x400" alt="Product Picture" style="width: 100px">
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="/Picture/Product/@item.ProductId" alt="Product Picture" style="width: 100px">
+                    }
+                </td>
+                <td>
+                    <input type="checkbox" asp-for="@item.Status" onclick="return false;" class="large-checkbox" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-teal">Edit</a> &nbsp;
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

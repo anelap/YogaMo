@@ -1,0 +1,50 @@
+﻿@model YogaMo.WebAPI.Database.YogaVideo
+
+@{
+    ViewData["Title"] = "Edit video";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="YoutubeID" class="control-label"></label>
+                <input asp-for="YoutubeID" class="form-control" />
+                <span asp-validation-for="YoutubeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ThumbnailFileName" class="control-label"></label>
+                <img src="/thumbs/@Model.ThumbnailFileName" class="elevation-2 d-block" alt="User Video" width="200" onclick="$('#ThumbnailFileName').click();" style="cursor: pointer;">
+                <input type="file" asp-for="ThumbnailFileName" />
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<script>
+    $(':input[type=file]').change(function (event) {
+        if (event.target.files.length) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $(this).siblings("img").attr('src', tmppath);
+        }
+        else {
+            $(this).siblings("img").attr('src', "/thumbs/@Model.ThumbnailFileName");
+        }
+    })
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

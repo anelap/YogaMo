@@ -1,0 +1,354 @@
+﻿@{
+    var userInfo = Context.GetLoggedInUser();
+    bool isAdmin = userInfo.RoleName == "Administrator";
+    bool isInstructor = userInfo.RoleName == "Instructor";
+    bool isClient = userInfo.RoleName == "Client";
+    Context.Request.Cookies.TryGetValue("dark_mode", out string dark_mode);
+
+    string controller = ViewContext.RouteData.Values["Controller"].ToString();
+    string action = ViewContext.RouteData.Values["Action"].ToString();
+    int ConfirmedOrders = 0;
+    if (isInstructor)
+    {
+        ConfirmedOrders = Context.GetNumOfOrdersByStatus(OrderStatus.Confirmed);
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YogaMo - @ViewData["Title"]</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/dist/css/adminlte.css">
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery cookie -->
+    <script src="~/dist/js/jquery.cookie.js"></script>
+    <!-- uPlot -->
+    <link rel="stylesheet" href="~/plugins/uplot/uPlot.min.css">
+</head>
+<body class="hold-transition sidebar-mini @(dark_mode == "true" ? "dark-mode" : "")">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-@(dark_mode == "true" ? "dark" : "light")" id="navbar">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a asp-action="Index" asp-controller="home" class="nav-link">Home</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM -->
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+
+
+                @if (isInstructor)
+                {
+
+                    <!-- Notifications Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="far fa-bell"></i>
+                            @if (ConfirmedOrders > 0)
+                            {
+                                <span class="badge badge-danger navbar-badge">@ConfirmedOrders</span>
+                            }
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-item dropdown-header">@ConfirmedOrders Notifications</span>
+                            <div class="dropdown-divider"></div>
+                            <a asp-area="Instructor" asp-controller="Orders" asp-action="Index" asp-route-OrderStatus="@((int)YogaMo.WebAPI.Database.OrderStatus.Confirmed)" class="dropdown-item">
+                                <i class="fas fa-shopping-basket mr-2"></i> @ConfirmedOrders new confirmed orders
+                                @*<span class="float-right text-muted text-sm">3 mins</span>*@
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            @*<a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>*@
+                        </div>
+                    </li>
+
+                }
+                <li class="nav-item">
+                    <a class="nav-link" data-slide="true" asp-area="" asp-action="Index" asp-controller="Home" role="button">
+                        <i class="fas fa-home" title="Back to Shop"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-slide="true" href="#" role="button">
+                        <i class="fas fa-@(dark_mode == "true" ? "lightbulb" : "moon")" id="theme-switch" title="Toggle Theme"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-slide="true" asp-area="" asp-action="Logout" asp-controller="Home" role="button" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-@(dark_mode == "true" ? "dark" : "light")-primary elevation-4" id="main-sidebar">
+            <!-- Brand Logo -->
+            <a asp-area="" asp-action="Index" asp-controller="Home" class="brand-link">
+                <img src="/dist/img/AdminLTELogo.png" alt="YogaMo Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light"><b>Yoga</b>Mo</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index">
+                            @if (isInstructor)
+                            {
+                                <img src="/Picture/Instructor/@userInfo.Id" class="img-circle elevation-2 d-block" alt="User Image">
+                            }
+                            else if (isClient)
+                            {
+                                <img src="/Picture/Client/@userInfo.Id" class="img-circle elevation-2 d-block" alt="User Image">
+                            }
+                            else
+                            {
+                                <img src="@ImageHelper.DefaultImageLocation" class="img-circle elevation-2" alt="User Image">
+                            }
+                        </a>
+                    </div>
+                    <div class="info">
+                        <a asp-area="" asp-controller="Profile" asp-action="Index" class="d-block">@userInfo.FirstName @userInfo.LastName</a>
+                    </div>
+                </div>
+
+                <!-- SidebarSearch Form -->
+                @*<div class="form-inline">
+                        <div class="input-group" data-widget="sidebar-search">
+                            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-sidebar">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>*@
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+
+                        @if (userInfo.RoleName == "Instructor")
+                        {
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="YogaClasses" asp-action="Index" class="nav-link @(controller == "YogaClasses" ? "active" : "")">
+                                    <i class="nav-icon fas fa-calendar-alt"></i>
+                                    <p>
+                                        Yoga Classes
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="YogaTypes" asp-action="Index" class="nav-link @(controller == "YogaTypes" ? "active" : "")">
+                                    <i class="nav-icon fas fa-yin-yang"></i>
+                                    <p>
+                                        Yoga Types
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="Clients" asp-action="Index" class="nav-link @(controller == "Clients" ? "active" : "")">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Clients
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="YogaHalls" asp-action="Index" class="nav-link @(controller == "YogaHalls" ? "active" : "")">
+                                    <i class="nav-icon fas fa-door-open"></i>
+                                    <p>
+                                        Yoga Halls
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="YogaPhotos" asp-action="Index" class="nav-link @(controller == "YogaPhotos" ? "active" : "")">
+                                    <i class="nav-icon fas fa-images"></i>
+                                    <p>
+                                        Yoga Photos
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="YogaVideos" asp-action="Index" class="nav-link @(controller == "YogaVideos" ? "active" : "")">
+                                    <i class="nav-icon fas fa-film"></i>
+                                    <p>
+                                        Yoga Videos
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" class="nav-link @(controller == "Profile" ? "active" : "")">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        User Profile
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="Orders" asp-action="Index" class="nav-link @(controller == "Orders" ? "active" : "")">
+                                    <i class="nav-icon fas fa-shopping-basket"></i>
+                                    <p>
+                                        Orders
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Instructor" asp-controller="Report" asp-action="Index" class="nav-link @(controller == "Report" ? "active" : "")">
+                                    <i class="nav-icon fas fa-paste"></i>
+                                    <p>
+                                        Sales Reports
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        else if (userInfo.RoleName == "Client")
+                        {
+                            <li class="nav-item">
+                                <a asp-area="Client" asp-controller="YogaClasses" asp-action="Index" class="nav-link @(controller == "YogaClasses" ? "active" : "")">
+                                    <i class="nav-icon fas fa-calendar-alt"></i>
+                                    <p>
+                                        Yoga Classes
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Client" asp-controller="Instructors" asp-action="Index" class="nav-link @(controller == "Instructors" ? "active" : "")">
+                                    <i class="nav-icon fas fa-om"></i>
+                                    <p>
+                                        Instructors
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" class="nav-link @(controller == "Profile" ? "active" : "")">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        User Profile
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                        else if (userInfo.RoleName == "Administrator")
+                        {
+                            <li class="nav-item">
+                                <a asp-area="Administrator" asp-controller="Instructors" asp-action="Index" class="nav-link @(controller == "Instructors" ? "active" : "")">
+                                    <i class="nav-icon fas fa-om"></i>
+                                    <p>
+                                        Instructors
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Administrator" asp-controller="Clients" asp-action="Index" class="nav-link @(controller == "Clients" ? "active" : "")">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Clients
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="Administrator" asp-controller="Products" asp-action="Index" class="nav-link @(controller == "Products" ? "active" : "")">
+                                    <i class="nav-icon fas fa-shopping-cart"></i>
+                                    <p>
+                                        Products
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Profile" asp-action="Index" class="nav-link @(controller == "Profile" ? "active" : "")">
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        User Profile
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@ViewData["Title"]</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+
+                <!-- Search box -->
+                @RenderSection("SearchArea", false)
+
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-body">
+                        @RenderBody()
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- Bootstrap 4 -->
+    <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/dist/js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="/dist/js/demo.js"></script>
+    @RenderSection("Scripts", false)
+    <script src="/dist/js/theme-switcher.js"></script>
+</body>
+</html>

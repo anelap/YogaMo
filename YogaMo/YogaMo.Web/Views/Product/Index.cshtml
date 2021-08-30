@@ -1,0 +1,272 @@
+﻿@model ProductVM
+@{
+    ViewData["Title"] = "Product Information";
+    Layout = "_LayoutShop";
+
+    string imageUrl = null;
+    if (Model.Photo == null)
+    {
+        imageUrl = "http://placehold.it/700x400";
+    }
+    else
+    {
+        imageUrl = "/Picture/Product/" + Model.ProductId;
+    }
+}
+
+<link rel="stylesheet" href="~/css/rating.css" />
+
+<section class="mb-5 mt-3">
+    <form action="#" method="post" id="productForm">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+
+                <div id="mdb-lightbox-ui"></div>
+
+                <div class="mdb-lightbox">
+
+                    <div class="row product-gallery mx-1">
+
+                        <div class="col-12 mb-0">
+                            <figure class="view overlay rounded z-depth-1 main-img">
+                                <a href="@imageUrl"
+                                   data-size="710x823">
+                                    <img class="img-fluid z-depth-1" src="@imageUrl">
+                                </a>
+
+
+
+                            </figure>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-md-8">
+
+                <h5>@Model.Name</h5>
+                <p class="mb-2 text-muted text-uppercase small">@Model.Category.Name</p>
+                <div>
+
+                    <div class="rating d-inline-block">
+                        @{
+                            var NumStars = (int)(@Model.AverageRating + 0.5);
+                        }
+                        @for (int i = 1; i <= 5 - NumStars; i++)
+                        {
+                            <a asp-action="RateProduct" asp-route-id="@Model.ProductId" asp-route-rating="@(5 - i + 1)" class="far fa-star fa-sm text-warning"></a>
+                        }
+                        @for (int i = 1; i <= NumStars; i++)
+                        {
+                            <a asp-action="RateProduct" asp-route-id="@Model.ProductId" asp-route-rating="@(NumStars - i + 1)" class="fas fa-star fa-sm text-warning currentRating"></a>
+                        }
+                    </div>
+                    <div class="d-inline-block">
+                        @Model.AverageRating.ToString("0.00")
+                    </div>
+                </div>
+                <p><span class="mr-1"><strong>$@Model.Price.ToString("0.00")</strong></span></p>
+                @if (Model.Description != null)
+                {
+                    <p class="pt-1">
+
+                        @Html.Raw(Model.Description.Replace("\n", "<br/>"))
+                    </p>
+                }
+                @if (Model.Color != null)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-borderless mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
+                                    <td>@Model.Color</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                <hr>
+                <div class="table-responsive mb-2">
+                    <table class="table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="pl-0 pb-0 w-25">Quantity</td>
+                                @if (Model.Category.Name == "Clothing")
+                                {
+                                    <td class="pb-0">Select size</td>
+                                }
+                            </tr>
+                            <tr>
+                                <td class="pl-0">
+                                    <div class="def-number-input number-input safari_only mb-0">
+                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                                                class="minus"></button>
+                                        <input class="quantity" min="@(Model.QuantityStock == 0 ? 0 : 1)" max="@Model.QuantityStock" asp-for="Quantity" type="number">
+                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                                                class="plus"></button>
+                                    </div>
+                                    <span class="text-sm">@Model.QuantityStock available</span>
+                                    <br />
+
+                                    @if (Model.ProductsSold > 0)
+                                    {
+                                    <span class="text-sm text-danger font-weight-bold">@Model.ProductsSold sold</span>
+                                    }
+
+
+                                </td>
+                                @if (Model.Category.Name == "Clothing")
+                                {
+                                    <td>
+                                        <div class="mt-1">
+                                            @foreach (var size in Model.Sizes)
+                                            {
+
+                                                <div class="form-check form-check-inline pl-0">
+                                                    @if (Model.Size == size)
+                                                    {
+                                                        <input type="radio" class="form-check-input" id="Size_@size" name="Size" value="@size" checked>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="radio" class="form-check-input" id="Size_@size" name="Size" value="@size">
+                                                    }
+                                                    <label class="form-check-label small text-uppercase card-link-secondary" for="Size_@size">@size</label>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+
+                                }
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <input asp-for="ProductId" hidden />
+                <button type="button" class="btn btn-primary btn-md mr-1 mb-2 btn-buy-now">Buy now</button>
+                <button type="button" class="btn btn-light btn-md mr-1 mb-2 btn-add-to-cart">
+                    <i class="fas fa-shopping-cart pr-2"></i>Add to cart
+                </button>
+            </div>
+        </div>
+    </form>
+
+</section>
+
+<!--Section: Block Content-->
+<section>
+    <h4 class="text-center mb-3">Recommended Products</h4>
+    <!-- Grid row -->
+    <div class="row justify-content-center">
+
+        @foreach (var item in Model.RecommendedProducts)
+        {
+            string imageUrlRP = null;
+            if (item.Photo == null)
+            {
+                imageUrlRP = "http://placehold.it/700x400";
+            }
+            else
+            {
+                imageUrlRP = "/Picture/Product/" + item.ProductId;
+            }
+            <!-- Grid column -->
+            <div class="col-md-3 mb-5">
+
+                <!-- Card -->
+                <div class="">
+
+                    <div class="view zoom overlay z-depth-2 rounded">
+                        <img class="img-fluid mx-auto" style="height: 256px;"
+                             src="@imageUrlRP" alt="Sample">
+                        <a asp-action="Index" asp-route-id="@item.ProductId">
+                            <div class="mask">
+                                <img class="img-fluid mx-auto" style="height: 256px;"
+                                     src="@imageUrlRP">
+                                <div class="mask rgba-black-slight"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="text-center pt-4">
+
+                        <h5>@item.Name</h5>
+                        <p class="mb-2 text-muted text-uppercase small">@item.Category.Name</p>
+
+                        <div class="rating d-inline-block">
+                            @{
+                                var NumStarsRP = (int)(item.AverageRating + 0.5);
+                            }
+                            @for (int i = 1; i <= 5 - NumStarsRP; i++)
+                            {
+                                <i class="far fa-star fa-sm text-warning"></i>
+                            }
+                            @for (int i = 1; i <= NumStarsRP; i++)
+                            {
+                                <i class="fas fa-star fa-sm text-warning currentRating"></i>
+                            }
+                        </div>
+                        <div class="d-inline-block">
+                            @item.AverageRating.ToString("0.00")
+                        </div>
+                        <hr>
+                        <h6 class="mb-3">@item.PriceStr</h6>
+
+                        <a asp-action="Index" asp-route-id="@item.ProductId" class="btn btn-light btn-sm mr-1 mb-2">
+                            <i class="fas fa-info-circle pr-2"></i>Details
+                        </a>
+
+                    </div>
+
+                </div>
+                <!-- Card -->
+
+            </div>
+            <!-- Grid column -->
+        }
+
+    </div>
+    <!-- Grid row -->
+
+</section>
+<!--Section: Block Content-->
+
+<a asp-action="AddToCart" asp-route-id="@Model.ProductId" hidden id="url-add-to-cart"></a>
+<a asp-action="BuyNow" asp-route-id="@Model.ProductId" hidden id="url-buy-now"></a>
+<a asp-action="Index" asp-controller="Home" hidden id="url-home"></a>
+<a asp-area="Client" asp-action="Index" asp-controller="Cart" hidden id="url-cart"></a>
+
+<!--Section: Block Content-->
+
+@section Scripts {
+
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="/js/mdb.min.js"></script>
+    <script>
+        $(".btn-add-to-cart").click(function () {
+            event.preventDefault();
+
+            var url = $("#url-add-to-cart").attr("href");
+            var url_home = $("#url-home").attr("href");
+            var form = $("#productForm");
+
+            $.post(url, form.serialize(), function (data) {
+                location.href = url_home;
+            });
+        });
+        $(".btn-buy-now").click(function () {
+            event.preventDefault();
+
+            var url = $("#url-buy-now").attr("href");
+            var url_home = $("#url-cart").attr("href");
+            var form = $("#productForm");
+
+            $.post(url, form.serialize(), function (data) {
+                location.href = url_home;
+            });
+        });
+    </script>
+}

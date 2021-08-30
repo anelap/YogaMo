@@ -1,0 +1,80 @@
+﻿@model YogaMo.WebAPI.Database.Product
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="QuantityStock" class="control-label"></label>
+                <input asp-for="QuantityStock" class="form-control" />
+                <span asp-validation-for="QuantityStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label"></label>
+                <img src="@ImageHelper.DefaultProductImageLocation" class="elevation-2 d-block" alt="Product Image" width="200" onclick="$('#Photo').click();" style="cursor: pointer;">
+                <input type="file" asp-for="Photo" />
+
+                <button type="button" class="btn btn-default" id="ButtonRemovePhoto" style="display: none;">Remove Photo</button>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script>
+    $(':input[type=file]').change(function (event) {
+        if (event.target.files.length) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $(this).siblings("img").attr('src', tmppath);
+            $('#ButtonRemovePhoto').show();
+        }
+        else {
+            $(this).siblings("img").attr('src', "@ImageHelper.DefaultProductImageLocation");
+            $('#ButtonRemovePhoto').hide();
+        }
+    });
+    $('#ButtonRemovePhoto').click(function () {
+        $(this).hide();
+
+        $('#Photo').val("");
+        $(this).siblings("img").attr('src', "@ImageHelper.DefaultProductImageLocation");
+    })
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

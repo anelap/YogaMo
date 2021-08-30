@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+    Layout = "_LayoutShop";
+}
+
+<div id="ajaxDiv"></div>
+
+<a asp-area="Client" asp-controller="Cart" asp-action="LoadCart" hidden id="url-load-cart"></a>
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var url = $('#url-load-cart').attr('href');
+
+        $.get(url, function (data) {
+            $('#ajaxDiv').html(data);
+        })
+    </script>
+}

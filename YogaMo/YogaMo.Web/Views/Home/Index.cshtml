@@ -1,0 +1,77 @@
+﻿@model HomeVM
+@{
+    ViewData["Title"] = "Shop";
+    Layout = "_LayoutShop";
+}
+<div class="mt-5 d-none d-md-block"></div>
+
+<div class="row">
+
+    <div class="col-lg-3">
+
+        <h1 class="my-4">YogaMo Shop</h1>
+        <div class="list-group">
+            <a asp-action="Category" asp-route-page="1" class="list-group-item @(Model.Category == null ? "active" : "")">All Products</a>
+
+            @foreach (var item in Model.Categories)
+            {
+                if (Model.Category == item.Name)
+                {
+                    <a asp-action="Category" asp-route-category="@item.Name" asp-route-page="1" class="list-group-item active">@item.Name</a>
+
+                }
+                else
+                {
+                    <a asp-action="Category" asp-route-category="@item.Name" asp-route-page="1" class="list-group-item">@item.Name</a>
+                }
+            }
+        </div>
+
+    </div>
+    <!-- /.col-lg-3 -->
+
+    <div class="col-lg-9 product-card">
+
+    </div>
+    <!-- /.col-lg-9 -->
+
+</div>
+<!-- /.row -->
+
+<div class="mt-5"></div>
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var items = $('.list-group-item');
+
+        $('.list-group-item').click(function (event) {
+            event.preventDefault();
+
+            var url = $(this).attr('href');
+            items.removeClass('active');
+            $(this).addClass('active');
+
+            $.get(url, function (data) {
+                $('.product-card').html(data);
+                $('.product-card').scrollTop(0);
+
+            });
+        });
+
+        $('.product-card').on('click', 'ul.pagination a.page-link', function (event) {
+            event.preventDefault();
+
+            var url = $(this).attr('href');
+
+            $.get(url, function (data) {
+                $('.product-card').html(data);
+                $('.product-card').scrollTop(0);
+            });
+        });
+
+        $(items[0]).click();
+
+    </script>
+}

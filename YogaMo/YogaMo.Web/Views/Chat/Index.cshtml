@@ -1,0 +1,764 @@
+﻿@model ChatVM
+@{
+    Context.Request.Cookies.TryGetValue("dark_mode", out string dark_mode);
+    ViewData["Title"] = "Live Chat";
+    Layout = "_LayoutShop";
+
+    string theme = dark_mode == "true" ? "dark" : "light";
+}
+
+<link rel="stylesheet" href="~/css/chat.css" />
+
+<div id="root">
+    <div class="app-simple @theme">
+        <div class="channels shown">
+            <div class="user">
+                <img src="/Picture/@Model.Role/@Model.Sender.Id" alt="User avatar " />
+                <h4>@Model.Sender.FirstName @Model.Sender.LastName <span class="close">✕</span></h4>
+            </div>
+            <h4>Direct Messages</h4>
+            <div>
+                <div id="DM_list" class="pn-channel-list pn-channel-list--@theme">
+                </div>
+            </div>
+
+            @if (Model.Role == "Client")
+            {
+                <h4>Instructors</h4>
+            }
+            else
+            {
+                <h4>Clients</h4>
+            }
+            <div>
+                <div class="pn-channel-list pn-channel-list--@theme">
+                    @if (Model.Role == "Client")
+                    {
+                        foreach (var item in Model.Instructors)
+                        {
+                    <div class="pn-channel" id="Channel_Instructor_@item.InstructorId" data-channel="dm-client-@Model.Sender.Id-instructor-@item.InstructorId" data-role="Instructor">
+                        <img class="pn-channel__thumb" src="/Picture/Instructor/@item.InstructorId"
+                             alt="Channel thumb" />
+                        <div class="pn-channel__title">
+                            <p class="pn-channel__name">@item.FullName</p>
+                            <p class="pn-channel__description">Direct chat with @item.FullName</p>
+                        </div>
+                        <div class="badge badge-primary unread-message-badge" style="display: none">
+                            
+                        </div>
+                    </div>
+                        }
+                    }
+                    else if (Model.Role == "Instructor")
+                    {
+                        foreach (var item in Model.Clients)
+                        {
+                    <div class="pn-channel" id="Channel_Client_@item.ClientId" data-channel="dm-client-@item.ClientId-instructor-@Model.Sender.Id" data-role="Client">
+                        <img class="pn-channel__thumb" src="/Picture/Client/@item.ClientId"
+                             alt="Channel thumb" />
+                        <div class="pn-channel__title">
+                            <p class="pn-channel__name">@item.FullName</p>
+                            <p class="pn-channel__description">Direct chat with @item.FullName</p>
+                        </div>
+
+                        <div class="badge badge-primary unread-message-badge" style="display: none">
+                            
+                        </div>
+                    </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="toggle">
+                <span>Dark Mode</span>
+                <button id="dark_mode_toggle_btn" aria-hidden="true" style="
+                cursor: pointer;
+                    overflow: hidden;
+                width: 50px;
+                height: 23.5px;
+                appearance: none;
+                border: none;
+                background-color: transparent;
+                padding: 0px;
+              ">
+                    <div style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-top: -28.75px;
+                  margin-left: -16px;
+                  width: 82.5px;
+                  height: 82.5px;
+                ">
+                        <div id="light_mode_btn" style="display: @(dark_mode == "true" ? "none" : "block")">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500"
+                                 preserveAspectRatio="xMidYMid meet" style="
+                      width: 100%;
+                      height: 100%;
+                      transform: translate3d(0px, 0px, 0px);
+                    ">
+                                <defs>
+                                    <clipPath id="__lottie_element_2">
+                                        <rect width="500" height="500" x="0" y="0"></rect>
+                                    </clipPath>
+                                </defs>
+                                <g clip-path="url(#__lottie_element_2)">
+                                    <g transform="matrix(1,0,0,1,250,250)" opacity="1" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4"
+                                                  stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="18.8" d="M0 0"></path>
+                                        </g>
+                                    </g>
+                                    <g transform="matrix(1,0,0,1,250,250)" opacity="1" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                            <path fill="rgb(105,199,254)" fill-opacity="1"
+                                                  d=" M150,0 C150,0 150,0 150,0 C150,38.632999420166016 118.63300323486328,70 80,70 C80,70 -80,70 -80,70 C-118.63300323486328,70 -150,38.632999420166016 -150,0 C-150,0 -150,0 -150,0 C-150,-38.632999420166016 -118.63300323486328,-70 -80,-70 C-80,-70 80,-70 80,-70 C118.63300323486328,-70 150,-38.632999420166016 150,0z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                    <g transform="matrix(1,0,0,1,250,217.15399169921875)" opacity="0.15" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                            <path fill="rgb(0,0,0)" fill-opacity="1"
+                                                  d=" M82.2229995727539,-37.15399932861328 C82.2229995727539,-37.15399932861328 -82.2229995727539,-37.15399932861328 -82.2229995727539,-37.15399932861328 C-119.65499877929688,-37.15399932861328 -150,-6.809000015258789 -150,30.62299919128418 C-150,30.62299919128418 -150,35.069000244140625 -150,35.069000244140625 C-150,35.768001556396484 -149.96800231933594,36.459999084472656 -149.94700622558594,37.15399932861328 C-148.8419952392578,0.6890000104904175 -118.95600128173828,-28.538000106811523 -82.2229995727539,-28.538000106811523 C-82.2229995727539,-28.538000106811523 82.2229995727539,-28.538000106811523 82.2229995727539,-28.538000106811523 C118.95600128173828,-28.538000106811523 148.8419952392578,0.6890000104904175 149.94700622558594,37.15399932861328 C149.96800231933594,36.459999084472656 150,35.768001556396484 150,35.069000244140625 C150,35.069000244140625 150,30.62299919128418 150,30.62299919128418 C150,-6.809000015258789 119.65499877929688,-37.15399932861328 82.2229995727539,-37.15399932861328z">
+                                            </path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4"
+                                                  stroke="rgb(238,253,255)" stroke-opacity="1" stroke-width="1" d="M0 0"></path>
+                                        </g>
+                                    </g>
+                                    <g transform="matrix(1,0,0,1,329.98358154296875,265)" opacity="1" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                            <path fill="rgb(255,255,255)" fill-opacity="1"
+                                                  d=" M16.075000762939453,-1.3669999837875366 C15.045000076293945,-7.395999908447266 9.79800033569336,-11.986000061035156 3.4760000705718994,-11.986000061035156 C3.4760000705718994,-11.986000061035156 3.4760000705718994,-11.986000061035156 3.4760000705718994,-11.986000061035156 C-2.8320000171661377,-11.986000061035156 -8.069999694824219,-7.414999961853027 -9.116000175476074,-1.406000018119812 C-9.116000175476074,-1.406000018119812 -19.304000854492188,-1.406000018119812 -19.304000854492188,-1.406000018119812 C-26.040000915527344,-1.406000018119812 -31.5,4.053999900817871 -31.5,10.789999961853027 C-31.5,10.789999961853027 -31.5,10.789999961853027 -31.5,10.789999961853027 C-31.5,17.525999069213867 -26.040000915527344,22.986000061035156 -19.304000854492188,22.986000061035156 C-19.304000854492188,22.986000061035156 15.303999900817871,22.986000061035156 15.303999900817871,22.986000061035156 C22.040000915527344,22.986000061035156 27.5,17.525999069213867 27.5,10.789999961853027 C27.5,10.789999961853027 27.5,10.789999961853027 27.5,10.789999961853027 C27.5,4.314000129699707 22.450000762939453,-0.9679999947547913 16.075000762939453,-1.3669999837875366z">
+                                            </path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4"
+                                                  stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path>
+                                        </g>
+                                    </g>
+                                    <g transform="matrix(1,0,0,1,275.2101135253906,220)" opacity="1" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                                            <path fill="rgb(255,255,255)" fill-opacity="1"
+                                                  d=" M11.88700008392334,-4.515999794006348 C11.210000038146973,-8.480999946594238 7.758999824523926,-11.5 3.6010000705718994,-11.5 C3.6010000705718994,-11.5 3.6010000705718994,-11.5 3.6010000705718994,-11.5 C-0.5479999780654907,-11.5 -3.992000102996826,-8.494000434875488 -4.679999828338623,-4.541999816894531 C-4.679999828338623,-4.541999816894531 -11.380000114440918,-4.541999816894531 -11.380000114440918,-4.541999816894531 C-15.8100004196167,-4.541999816894531 -19.400999069213867,-0.9509999752044678 -19.400999069213867,3.4790000915527344 C-19.400999069213867,3.4790000915527344 -19.400999069213867,3.4790000915527344 -19.400999069213867,3.4790000915527344 C-19.400999069213867,7.908999919891357 -15.8100004196167,11.5 -11.380000114440918,11.5 C-11.380000114440918,11.5 11.380000114440918,11.5 11.380000114440918,11.5 C15.8100004196167,11.5 19.400999069213867,7.908999919891357 19.400999069213867,3.4790000915527344 C19.400999069213867,3.4790000915527344 19.400999069213867,3.4790000915527344 19.400999069213867,3.4790000915527344 C19.400999069213867,-0.7799999713897705 16.079999923706055,-4.252999782562256 11.88700008392334,-4.515999794006348z">
+                                            </path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4"
+                                                  stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path>
+                                        </g>
+                                    </g>
+                                    <g style="display: none">
+                                        <g>
+                                            <path></path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4">
+                                            </path>
+                                        </g>
+                                        <g>
+                                            <path></path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4">
+                                            </path>
+                                        </g>
+                                        <g>
+                                            <path></path>
+                                            <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4">
+                                            </path>
+                                        </g>
+                                    </g>
+                                    <g transform="matrix(-0.9962533116340637,-0.08648314327001572,0.08648314327001572,-0.9962533116340637,225.320556640625,315.23486328125)"
+                                       opacity="1" style="display: block">
+                                        <g opacity="1" transform="matrix(1,0,0,1,60.25,60.25)">
+                                            <path fill="rgb(254,239,136)" fill-opacity="1"
+                                                  d=" M60,0 C60,33.137001037597656 33.137001037597656,60 0,60 C-33.137001037597656,60 -60,33.137001037597656 -60,0 C-60,-33.137001037597656 -33.137001037597656,-60 0,-60 C33.137001037597656,-60 60,-33.137001037597656 60,0z">
+                                            </path>
+                                        </g>
+                                        <g opacity="1" transform="matrix(1,0,0,1,80.1709976196289,53.448001861572266)">
+                                            <path fill="rgb(254,239,136)" fill-opacity="1"
+                                                  d=" M-43.15299987792969,29.141000747680664 C-43.15299987792969,35.02799987792969 -47.92599868774414,39.80099868774414 -53.8129997253418,39.80099868774414 C-59.70100021362305,39.80099868774414 -64.4729995727539,35.02799987792969 -64.4729995727539,29.141000747680664 C-64.4729995727539,23.253000259399414 -59.70100021362305,18.481000900268555 -53.8129997253418,18.481000900268555 C-47.92599868774414,18.481000900268555 -43.15299987792969,23.253000259399414 -43.15299987792969,29.141000747680664z M10.449000358581543,7.038000106811523 C16.78700065612793,3.4079999923706055 21.06100082397461,-3.4179999828338623 21.06100082397461,-11.246000289916992 C21.06100082397461,-22.878000259399414 11.631999969482422,-32.30699920654297 0,-32.30699920654297 C-11.631999969482422,-32.30699920654297 -21.06100082397461,-22.878000259399414 -21.06100082397461,-11.246000289916992 C-21.06100082397461,-0.5669999718666077 -13.112000465393066,8.24899959564209 -2.809999942779541,9.623000144958496 C-5.434000015258789,12.008999824523926 -7.0920000076293945,15.439000129699707 -7.0920000076293945,19.266000747680664 C-7.0920000076293945,26.468000411987305 -1.253000020980835,32.30699920654297 5.948999881744385,32.30699920654297 C13.152000427246094,32.30699920654297 18.990999221801758,26.468000411987305 18.990999221801758,19.266000747680664 C18.990999221801758,13.647000312805176 15.430000305175781,8.871999740600586 10.449000358581543,7.038000106811523z">
+                                            </path>
+                                        </g>
+                                        <g opacity="1" transform="matrix(1,0,0,1,86.84500122070312,53.361000061035156)">
+                                            <path fill="rgb(254,239,136)" fill-opacity="1"
+                                                  d=" M-57.25199890136719,37.67399978637695 C-63.138999938964844,37.67399978637695 -67.91200256347656,32.902000427246094 -67.91200256347656,27.013999938964844 C-67.91200256347656,24.072999954223633 -66.72100067138672,21.40999984741211 -64.79399871826172,19.481000900268555 C-68.53399658203125,21.136999130249023 -71.14700317382812,24.874000549316406 -71.14700317382812,29.22800064086914 C-71.14700317382812,35.1150016784668 -66.375,39.88800048828125 -60.48699951171875,39.88800048828125 C-57.54100036621094,39.88800048828125 -54.874000549316406,38.69300079345703 -52.944000244140625,36.7599983215332 C-54.26300048828125,37.34400177001953 -55.71799850463867,37.67399978637695 -57.25199890136719,37.67399978637695z M3.7750000953674316,7.124000072479248 C10.11299991607666,3.49399995803833 14.387999534606934,-3.3320000171661377 14.387999534606934,-11.15999984741211 C14.387999534606934,-22.79199981689453 4.958000183105469,-32.22100067138672 -6.673999786376953,-32.22100067138672 C-9.39799976348877,-32.22100067138672 -11.998000144958496,-31.697999954223633 -14.387999534606934,-30.756999969482422 C-12.996999740600586,-31.04599952697754 -11.555999755859375,-31.200000762939453 -10.079000473022461,-31.200000762939453 C1.5529999732971191,-31.200000762939453 10.982999801635742,-21.768999099731445 10.982999801635742,-10.13700008392334 C10.982999801635742,-2.309000015258789 6.708000183105469,4.515999794006348 0.3700000047683716,8.145999908447266 C5.35099983215332,9.979999542236328 8.91100025177002,14.755999565124512 8.91100025177002,20.374000549316406 C8.91100025177002,25.636999130249023 5.7870001792907715,30.160999298095703 1.2970000505447388,32.22100067138672 C7.5370001792907715,31.24799919128418 12.317000389099121,25.865999221801758 12.317000389099121,19.35300064086914 C12.317000389099121,13.734000205993652 8.755999565124512,8.958000183105469 3.7750000953674316,7.124000072479248z">
+                                            </path>
+                                        </g>
+                                    </g>
+                                    <g style="display: none">
+                                        <g>
+                                            <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0"></path>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <div id="dark_mode_btn" style="display: @(dark_mode == "true" ? "block" : "none")">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);"><defs><clipPath id="__lottie_element_2"><rect width="500" height="500" x="0" y="0"></rect></clipPath></defs><g clip-path="url(#__lottie_element_2)"><g transform="matrix(1,0,0,1,250,250)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="18.8" d="M0 0"></path></g></g><g transform="matrix(1,0,0,1,250,250)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path fill="rgb(14,19,65)" fill-opacity="1" d=" M150,0 C150,0 150,0 150,0 C150,38.632999420166016 118.63300323486328,70 80,70 C80,70 -80,70 -80,70 C-118.63300323486328,70 -150,38.632999420166016 -150,0 C-150,0 -150,0 -150,0 C-150,-38.632999420166016 -118.63300323486328,-70 -80,-70 C-80,-70 80,-70 80,-70 C118.63300323486328,-70 150,-38.632999420166016 150,0z"></path></g></g><g transform="matrix(1,0,0,1,250,217.15399169921875)" opacity="0.15" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path fill="rgb(0,0,0)" fill-opacity="1" d=" M82.2229995727539,-37.15399932861328 C82.2229995727539,-37.15399932861328 -82.2229995727539,-37.15399932861328 -82.2229995727539,-37.15399932861328 C-119.65499877929688,-37.15399932861328 -150,-6.809000015258789 -150,30.62299919128418 C-150,30.62299919128418 -150,35.069000244140625 -150,35.069000244140625 C-150,35.768001556396484 -149.96800231933594,36.459999084472656 -149.94700622558594,37.15399932861328 C-148.8419952392578,0.6890000104904175 -118.95600128173828,-28.538000106811523 -82.2229995727539,-28.538000106811523 C-82.2229995727539,-28.538000106811523 82.2229995727539,-28.538000106811523 82.2229995727539,-28.538000106811523 C118.95600128173828,-28.538000106811523 148.8419952392578,0.6890000104904175 149.94700622558594,37.15399932861328 C149.96800231933594,36.459999084472656 150,35.768001556396484 150,35.069000244140625 C150,35.069000244140625 150,30.62299919128418 150,30.62299919128418 C150,-6.809000015258789 119.65499877929688,-37.15399932861328 82.2229995727539,-37.15399932861328z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(238,253,255)" stroke-opacity="1" stroke-width="1" d="M0 0"></path></g></g><g transform="matrix(1,0,0,1,217.23681640625,265)" opacity="0.16440919999973858" style="display: none;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M16.075000762939453,-1.3669999837875366 C15.045000076293945,-7.395999908447266 9.79800033569336,-11.986000061035156 3.4760000705718994,-11.986000061035156 C3.4760000705718994,-11.986000061035156 3.4760000705718994,-11.986000061035156 3.4760000705718994,-11.986000061035156 C-2.8320000171661377,-11.986000061035156 -8.069999694824219,-7.414999961853027 -9.116000175476074,-1.406000018119812 C-9.116000175476074,-1.406000018119812 -19.304000854492188,-1.406000018119812 -19.304000854492188,-1.406000018119812 C-26.040000915527344,-1.406000018119812 -31.5,4.053999900817871 -31.5,10.789999961853027 C-31.5,10.789999961853027 -31.5,10.789999961853027 -31.5,10.789999961853027 C-31.5,17.525999069213867 -26.040000915527344,22.986000061035156 -19.304000854492188,22.986000061035156 C-19.304000854492188,22.986000061035156 15.303999900817871,22.986000061035156 15.303999900817871,22.986000061035156 C22.040000915527344,22.986000061035156 27.5,17.525999069213867 27.5,10.789999961853027 C27.5,10.789999961853027 27.5,10.789999961853027 27.5,10.789999961853027 C27.5,4.314000129699707 22.450000762939453,-0.9679999947547913 16.075000762939453,-1.3669999837875366z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path></g></g><g transform="matrix(1,0,0,1,211.9197540283203,220)" opacity="0.16440919999973858" style="display: none;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path fill="rgb(255,255,255)" fill-opacity="1" d=" M11.88700008392334,-4.515999794006348 C11.210000038146973,-8.480999946594238 7.758999824523926,-11.5 3.6010000705718994,-11.5 C3.6010000705718994,-11.5 3.6010000705718994,-11.5 3.6010000705718994,-11.5 C-0.5479999780654907,-11.5 -3.992000102996826,-8.494000434875488 -4.679999828338623,-4.541999816894531 C-4.679999828338623,-4.541999816894531 -11.380000114440918,-4.541999816894531 -11.380000114440918,-4.541999816894531 C-15.8100004196167,-4.541999816894531 -19.400999069213867,-0.9509999752044678 -19.400999069213867,3.4790000915527344 C-19.400999069213867,3.4790000915527344 -19.400999069213867,3.4790000915527344 -19.400999069213867,3.4790000915527344 C-19.400999069213867,7.908999919891357 -15.8100004196167,11.5 -11.380000114440918,11.5 C-11.380000114440918,11.5 11.380000114440918,11.5 11.380000114440918,11.5 C15.8100004196167,11.5 19.400999069213867,7.908999919891357 19.400999069213867,3.4790000915527344 C19.400999069213867,3.4790000915527344 19.400999069213867,3.4790000915527344 19.400999069213867,3.4790000915527344 C19.400999069213867,-0.7799999713897705 16.079999923706055,-4.252999782562256 11.88700008392334,-4.515999794006348z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path></g></g><g style="display: block;" transform="matrix(1,0,0,1,187.31492614746094,212.75)" opacity="1"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path fill="rgb(238,253,255)" fill-opacity="1" d=" M0,-4 C2.2076001167297363,-4 4,-2.2076001167297363 4,0 C4,2.2076001167297363 2.2076001167297363,4 0,4 C-2.2076001167297363,4 -4,2.2076001167297363 -4,0 C-4,-2.2076001167297363 -2.2076001167297363,-4 0,-4z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path></g><g opacity="1" transform="matrix(1,0,0,1,47.5,45)"><path fill="rgb(238,253,255)" fill-opacity="1" d=" M0,-3 C1.6556999683380127,-3 3,-1.6556999683380127 3,0 C3,1.6556999683380127 1.6556999683380127,3 0,3 C-1.6556999683380127,3 -3,1.6556999683380127 -3,0 C-3,-1.6556999683380127 -1.6556999683380127,-3 0,-3z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path></g><g opacity="1" transform="matrix(1,0,0,1,-32.5,65)"><path fill="rgb(238,253,255)" fill-opacity="1" d=" M0,-5 C2.759500026702881,-5 5,-2.759500026702881 5,0 C5,2.759500026702881 2.759500026702881,5 0,5 C-2.759500026702881,5 -5,2.759500026702881 -5,0 C-5,-2.759500026702881 -2.759500026702881,-5 0,-5z"></path><path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="32" d="M0 0"></path></g></g><g transform="matrix(1,0,0,1,269.75,189.75)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,60.25,60.25)"><path fill="rgb(237,252,255)" fill-opacity="1" d=" M60,0 C60,33.137001037597656 33.137001037597656,60 0,60 C-33.137001037597656,60 -60,33.137001037597656 -60,0 C-60,-33.137001037597656 -33.137001037597656,-60 0,-60 C33.137001037597656,-60 60,-33.137001037597656 60,0z"></path></g><g opacity="1" transform="matrix(1,0,0,1,80.1709976196289,53.448001861572266)"><path fill="rgb(220,244,247)" fill-opacity="1" d=" M-43.15299987792969,29.141000747680664 C-43.15299987792969,35.02799987792969 -47.92599868774414,39.80099868774414 -53.8129997253418,39.80099868774414 C-59.70100021362305,39.80099868774414 -64.4729995727539,35.02799987792969 -64.4729995727539,29.141000747680664 C-64.4729995727539,23.253000259399414 -59.70100021362305,18.481000900268555 -53.8129997253418,18.481000900268555 C-47.92599868774414,18.481000900268555 -43.15299987792969,23.253000259399414 -43.15299987792969,29.141000747680664z M10.449000358581543,7.038000106811523 C16.78700065612793,3.4079999923706055 21.06100082397461,-3.4179999828338623 21.06100082397461,-11.246000289916992 C21.06100082397461,-22.878000259399414 11.631999969482422,-32.30699920654297 0,-32.30699920654297 C-11.631999969482422,-32.30699920654297 -21.06100082397461,-22.878000259399414 -21.06100082397461,-11.246000289916992 C-21.06100082397461,-0.5669999718666077 -13.112000465393066,8.24899959564209 -2.809999942779541,9.623000144958496 C-5.434000015258789,12.008999824523926 -7.0920000076293945,15.439000129699707 -7.0920000076293945,19.266000747680664 C-7.0920000076293945,26.468000411987305 -1.253000020980835,32.30699920654297 5.948999881744385,32.30699920654297 C13.152000427246094,32.30699920654297 18.990999221801758,26.468000411987305 18.990999221801758,19.266000747680664 C18.990999221801758,13.647000312805176 15.430000305175781,8.871999740600586 10.449000358581543,7.038000106811523z"></path></g><g opacity="1" transform="matrix(1,0,0,1,86.84500122070312,53.361000061035156)"><path fill="rgb(199,240,247)" fill-opacity="1" d=" M-57.25199890136719,37.67399978637695 C-63.138999938964844,37.67399978637695 -67.91200256347656,32.902000427246094 -67.91200256347656,27.013999938964844 C-67.91200256347656,24.072999954223633 -66.72100067138672,21.40999984741211 -64.79399871826172,19.481000900268555 C-68.53399658203125,21.136999130249023 -71.14700317382812,24.874000549316406 -71.14700317382812,29.22800064086914 C-71.14700317382812,35.1150016784668 -66.375,39.88800048828125 -60.48699951171875,39.88800048828125 C-57.54100036621094,39.88800048828125 -54.874000549316406,38.69300079345703 -52.944000244140625,36.7599983215332 C-54.26300048828125,37.34400177001953 -55.71799850463867,37.67399978637695 -57.25199890136719,37.67399978637695z M3.7750000953674316,7.124000072479248 C10.11299991607666,3.49399995803833 14.387999534606934,-3.3320000171661377 14.387999534606934,-11.15999984741211 C14.387999534606934,-22.79199981689453 4.958000183105469,-32.22100067138672 -6.673999786376953,-32.22100067138672 C-9.39799976348877,-32.22100067138672 -11.998000144958496,-31.697999954223633 -14.387999534606934,-30.756999969482422 C-12.996999740600586,-31.04599952697754 -11.555999755859375,-31.200000762939453 -10.079000473022461,-31.200000762939453 C1.5529999732971191,-31.200000762939453 10.982999801635742,-21.768999099731445 10.982999801635742,-10.13700008392334 C10.982999801635742,-2.309000015258789 6.708000183105469,4.515999794006348 0.3700000047683716,8.145999908447266 C5.35099983215332,9.979999542236328 8.91100025177002,14.755999565124512 8.91100025177002,20.374000549316406 C8.91100025177002,25.636999130249023 5.7870001792907715,30.160999298095703 1.2970000505447388,32.22100067138672 C7.5370001792907715,31.24799919128418 12.317000389099121,25.865999221801758 12.317000389099121,19.35300064086914 C12.317000389099121,13.734000205993652 8.755999565124512,8.958000183105469 3.7750000953674316,7.124000072479248z"></path></g></g><g style="display: block;" transform="matrix(1,0,0,1,250,250)" opacity="1"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(238,253,255)" stroke-opacity="1" stroke-width="1" d=" M-55.777000427246094,11.767000198364258 C-44.91999816894531,19.84000015258789 -34.92900085449219,28.6200008392334 -27,37.5"></path></g></g></g></svg>
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+        </div>
+        <div class="chat">
+            @*<div class="people">
+                    <span>2</span><svg viewBox="0 0 20 15" width="20" height="15">
+                        <title>People Group</title>
+                        <g fill="currentColor" fill-rule="evenodd">
+                            <path d="M7 13.503a.5.5 0 00.5.497h11a.5.5 0 00.5-.497c-.001-.035-.032-.895-.739-1.734C17.287 10.612 15.468 10 13 10s-4.287.612-5.261 1.768c-.707.84-.738 1.699-.739 1.734M18.5 15h-11c-.827 0-1.5-.673-1.5-1.5 0-.048.011-1.19.924-2.315.525-.646 1.241-1.158 2.128-1.522C10.123 9.223 11.452 9 13 9s2.876.223 3.948.662c.887.364 1.603.876 2.128 1.522.914 1.125.924 2.267.924 2.315 0 .827-.673 1.5-1.5 1.5M13 1c-1.654 0-3 1.346-3 3s1.346 3 3 3 3-1.346 3-3-1.346-3-3-3m0 7c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4M4.5 15h-3C.673 15 0 14.327 0 13.5c0-.037.008-.927.663-1.8.378-.505.894-.904 1.533-1.188.764-.34 1.708-.512 2.805-.512.179 0 .356.005.527.014a.5.5 0 01-.053.999 9.1 9.1 0 00-.473-.012c-3.894 0-3.997 2.379-4 2.503a.5.5 0 00.5.497h3a.5.5 0 010 1L4.5 15zM5 4c-1.103 0-2 .897-2 2s.897 2 2 2 2-.897 2-2-.897-2-2-2m0 5C3.346 9 2 7.654 2 6s1.346-3 3-3 3 1.346 3 3-1.346 3-3 3">
+                            </path>
+                        </g>
+                    </svg>
+                </div>*@
+            <div class="info">
+                <span class="hamburger">☰</span>
+                <h4 id="conversation-name"></h4>
+                <small id="conversation-description"></small>
+                <hr />
+            </div>
+            <div class="pn-msg-list pn-msg-list--@theme">
+                <div class="pn-msg-list-scroller">
+                    <div class="pn-msg-list__spacer"></div>
+
+                    <div class="pn-msg-list__bottom-ref"></div>
+                </div>
+            </div>
+            <div class="pn-msg-input pn-msg-input--@theme">
+                <div class="pn-msg-input__wrapper">
+                    <div class="pn-msg-input__spacer">
+                        <textarea class="pn-msg-input__textarea" placeholder="Type Message" rows="1"></textarea>
+                    </div>
+                    <div class="pn-msg-input__icon">☺</div>
+                    <button class="pn-msg-input__send">Send</button>
+                </div>
+            </div>
+        </div>
+        @*<div class="members false">
+            <h4>Online Users<span class="close">✕</span></h4>
+            <div class="pn-member-list pn-member-list--@theme">
+                <div class="pn-member">
+                    <div class="pn-member__avatar">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User avatar" />
+                    </div>
+                    <div class="pn-member__main">
+                        <p class="pn-member__name">Anna Gordon (You)</p>
+                        <p class="pn-member__title">VP Marketing</p>
+                    </div>
+                </div>
+                <div class="pn-member">
+                    <div class="pn-member__avatar">
+                        <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="User avatar" />
+                    </div>
+                    <div class="pn-member__main">
+                        <p class="pn-member__name">Victoria Torres</p>
+                        <p class="pn-member__title">Professor</p>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <!-- jQuery -->
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery cookie -->
+    <script src="~/dist/js/jquery.cookie.js"></script>
+
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.32.1.js"></script>
+    <script id="script_pubnub_initializer">
+        "use strict";
+
+        var pubnub;
+        var active_channel = '';
+        var my_name = '@Model.Sender.FirstName @Model.Sender.LastName';
+        var my_role = '@Model.Role';
+        var my_id = @Model.Sender.Id;
+
+        var KEY_ENTER = 13;
+
+        pubnub = new PubNub({
+            publishKey: "pub-c-7b434a26-e372-45cc-9b3e-166ff64fa5c3",
+            subscribeKey: "sub-c-f2a39c18-0779-11ec-ad72-221653618fb7",
+            uuid: my_id
+        })
+    </script>
+    <script id="script_pubnub_subscription">
+
+        var msg_list = $('.pn-msg-list-scroller');
+
+        pubnub.addListener({
+            status: function (statusEvent) {
+                // Runs when we are successfully subscribed a active_channel
+                if (statusEvent.category === "PNConnectedCategory") {
+                }
+            },
+            message: function (message) {
+                console.log(message);
+
+                var SenderId = message.publisher;
+
+                var OtherParticipant = SenderId;
+                if (SenderId == my_id) { // Receiving our own message back via subscribe()
+                    var channel_split = active_channel.split('-');
+                    if (my_role == 'Instructor')
+                        OtherParticipant = channel_split[2];
+                    else
+                        OtherParticipant = channel_split[4];
+                }
+
+                if (active_channel == message.channel) {
+                    var SenderName = message.userMetadata.sender;
+                    var SenderRole = message.userMetadata.role;
+                    var Message = message.message;
+                    var time = Date.formatPubnubTime(message.timetoken);
+
+                    msg_list.append(
+                        `
+                        <div class="pn-msg pn-msg--own" data-timetoken="` + message.timetoken + `">
+                            <div class="pn-msg__avatar">
+                                <img src="/Picture/` + SenderRole + `/` + SenderId + `" alt="User avatar " />
+                            </div>
+                            <div class="pn-msg__main">
+                                <div class="pn-msg__content">
+                                    <div class="pn-msg__title">
+                                        <span class="pn-msg__author">` + SenderName + `</span><span class="pn-msg__time">` + time + `</span>
+                                    </div>
+                                    <div class="pn-msg__bubble">
+                                        ` + Message + `
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`);
+
+                    msg_list.scrollTop(msg_list.prop("scrollHeight"));
+
+                    UpdateLastSeen(OtherParticipant, message.timetoken);
+                }
+                else {
+                    IncreaseUnreadMessageCount(message.channel);
+                }
+
+                TryMoveToDMs(OtherParticipant, message.timetoken);
+                UpdateLastMessage(OtherParticipant);
+            },
+            presence: function (presenceEvent) {
+                // This is where you handle presenceRolet important for now :)
+            }
+        })
+
+        pubnub.subscribe({
+            channels: @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.ChannelsList,
+Newtonsoft.Json.Formatting.Indented))
+        });
+
+    </script>
+
+<script id="script_pubnub_publish">
+    $('.pn-msg-input__textarea').keypress(function (e) {
+        if (e.which == KEY_ENTER) {
+            sendMessage();
+        }
+    });
+
+    $('.pn-msg-input__send').click(sendMessage);
+
+    function sendMessage() {
+        var message = $.trim($('.pn-msg-input__textarea').val());
+        if (message == "")
+            return;
+
+        var publishPayload = {
+            channel: active_channel,
+            message: message,
+            meta: {
+                sender: my_name,
+                role: my_role
+            }
+        }
+        pubnub.publish(publishPayload, function (status, response) {
+            console.log(status, response);
+        })
+        $('.pn-msg-input__textarea').val("");
+    }
+
+</script>
+
+<script id="script_switch_channel">
+    $('.pn-channel').click(switch_channel);
+
+    function switch_channel() {
+        var new_channel = $(this).data('channel');
+        if (new_channel == active_channel)
+            return;
+
+        loading_more = true;
+
+        $('.pn-channel--active').removeClass('pn-channel--active');
+        $(this).addClass('pn-channel--active');
+
+        msg_list.find('.pn-msg').remove();
+
+        $('#conversation-name').html($(this).find('.pn-channel__name').text());
+        $('#conversation-description').html($(this).data('role'));
+
+        SetUnreadMessages($(this), 0);
+
+        active_channel = new_channel;
+        LoadChannelHistory(active_channel);
+    }
+
+</script>
+
+<script id="script_channel_history">
+
+    function LoadChannelHistory(channel) {
+        pubnub.fetchMessages(
+            {
+                channels: [channel],
+                count: 10,
+                includeMeta: true,
+
+            },
+            (status, response) => {
+                if (response == null || !(channel in response.channels))
+                    return;
+
+                var messageList = response.channels[channel];
+
+                for (var i in messageList) {
+
+                    var message = messageList[i];
+                    var time = Date.formatPubnubTime(message.timetoken);
+
+                    msg_list.append(
+                        `
+                                <div class="pn-msg pn-msg--own" data-timetoken="` + message.timetoken + `">
+                                    <div class="pn-msg__avatar">
+                                        <img src="/Picture/` + message.meta.role + `/` + message.uuid + `" alt="User avatar " />
+                                    </div>
+                                    <div class="pn-msg__main">
+                                        <div class="pn-msg__content">
+                                            <div class="pn-msg__title">
+                                                <span class="pn-msg__author">` + message.meta.sender + `</span><span class="pn-msg__time">` + time + `</span>
+                                            </div>
+                                            <div class="pn-msg__bubble">
+                                                ` + message.message + `
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`);
+
+                }
+
+                msg_list.scrollTop(msg_list.prop("scrollHeight"));
+
+                var lastTimetoken = messageList[messageList.length - 1].timetoken;
+                console.log(lastTimetoken);
+
+                var channel_split = channel.split('-');
+                if (my_role == 'Instructor')
+                    OtherParticipant = channel_split[2];
+                else
+                    OtherParticipant = channel_split[4];
+
+                UpdateLastSeen(OtherParticipant, lastTimetoken);
+
+                loading_more = false;
+
+            }
+        );
+    }
+
+    var loading_more = false;
+
+    msg_list.scroll(function () {
+
+
+        if (!loading_more && msg_list.scrollTop() < 100) {
+            console.log('Loading more');
+            loading_more = true;
+
+            var channel = active_channel;
+            var first_message_timetoken = msg_list.find('.pn-msg').data('timetoken');
+
+            pubnub.fetchMessages(
+                {
+                    channels: [channel],
+                    count: 10,
+                    includeMeta: true,
+                    start: first_message_timetoken
+
+                },
+                (status, response) => {
+                    if (response == null || !(channel in response.channels))
+                        return;
+
+                    var messageList = response.channels[channel].reverse();
+
+                    for (var i in messageList) {
+
+                        var message = messageList[i];
+                        var time = Date.formatPubnubTime(message.timetoken);
+
+                        msg_list.prepend(
+                            `
+                                <div class="pn-msg pn-msg--own" data-timetoken="` + message.timetoken + `">
+                                    <div class="pn-msg__avatar">
+                                        <img src="/Picture/` + message.meta.role + `/` + message.uuid + `" alt="User avatar " />
+                                    </div>
+                                    <div class="pn-msg__main">
+                                        <div class="pn-msg__content">
+                                            <div class="pn-msg__title">
+                                                <span class="pn-msg__author">` + message.meta.sender + `</span><span class="pn-msg__time">` + time + `</span>
+                                            </div>
+                                            <div class="pn-msg__bubble">
+                                                ` + message.message + `
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`);
+
+                    }
+
+                    msg_list.scrollTop(200);
+                    loading_more = false;
+                }
+            );
+
+        }
+    });
+</script>
+
+<script id="script_helper_functions">
+
+    function TryMoveToDMs(SenderId, NewTimetoken) {
+
+        var move_to_dms = true;
+        for (var i in direct_messages) {
+            var dm = direct_messages[i];
+            var ParticipantId;
+
+            if (my_role === 'Instructor') {
+                ParticipantId = dm.client.id;
+            }
+            else if (my_role === 'Client') {
+                ParticipantId = dm.instructor.id;
+            }
+
+            if (ParticipantId == SenderId) {
+                move_to_dms = false;
+                break;
+            }
+
+        }
+
+        var $channel_el;
+        if (my_role === 'Instructor') {
+            $channel_el = $('#Channel_Client_' + SenderId);
+        }
+        else if (my_role === 'Client') {
+            $channel_el = $('#Channel_Instructor_' + SenderId);
+        }
+        $channel_el.attr('data-timetoken', Number.parseInt(NewTimetoken.substr(0, 13)));
+
+        if (move_to_dms) {
+            $channel_el.detach().appendTo('#DM_list');
+        }
+
+        SortDMs();
+
+    }
+
+    function SortDMs() {
+        var $wrapper = $('#DM_list');
+
+        $wrapper.find('.pn-channel').sort(function (a, b) {
+            return +b.getAttribute('data-timetoken') - +a.getAttribute('data-timetoken');
+        })
+            .appendTo($wrapper);
+    }
+
+    function UpdateLastMessage(UserID) {
+        $.post("/Chat/UpdateLastMessage/" + UserID, function (data) {
+            console.log(data);
+        })
+    }
+    function UpdateLastSeen(UserID, Timetoken) {
+        $.post("/Chat/UpdateLastSeen/" + UserID + "/?Timetoken=" + Timetoken, function (data) {
+            console.log(data);
+        })
+    }
+</script>
+
+<script id="script_unread_message_count">
+
+    function FetchMessageCounts(channelList, channelTimetokens) {
+        pubnub.messageCounts({
+            channels: channelList,
+            channelTimetokens: channelTimetokens,
+        }, (status, results) => {
+            if ('channels' in results) {
+                for (var channel in results.channels) {
+                    var count = results.channels[channel];
+
+                    var $channel_el = $('.pn-channel[data-channel="' + channel + '"]');
+                    if ($channel_el.length) {
+                        if (active_channel == channel)
+                            SetUnreadMessages($channel_el, 0);
+                        else
+                            SetUnreadMessages($channel_el, count);
+                    }
+                }
+            }
+
+        });
+    }
+
+    function SetUnreadMessages($channel_el, count) {
+        var badge = $channel_el.find('.unread-message-badge');
+
+        if (count > 0) {
+            if (count > 99) count = 99;
+
+            badge.html(count).show();
+        }
+        else {
+            badge.html("").hide();
+        }
+    }
+
+    function GetUnreadMessageCount(channel) {
+
+        var $channel_el = $('.pn-channel[data-channel="' + channel + '"]');
+        if ($channel_el.length) {
+            var badge = $channel_el.find('.unread-message-badge');
+            var content = badge.text();
+            if (content.length > 0)
+                return Number.parseInt(content);
+        }
+
+        return 0;
+    }
+
+
+    function IncreaseUnreadMessageCount(channel) {
+        var $channel_el = $('.pn-channel[data-channel="' + channel + '"]');
+        if ($channel_el.length) {
+            var count = GetUnreadMessageCount(channel) + 1;
+            SetUnreadMessages($channel_el, count);
+        }
+    }
+</script>
+
+<script id="script_direct_messages_move">
+    var direct_messages = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DirectMessages,
+Newtonsoft.Json.Formatting.Indented));
+
+    var channelList = [];
+    var channelTimetokens = [];
+
+    for (var i in direct_messages) {
+        var dm = direct_messages[i];
+
+        var $channel_el, channel_name, timetoken;
+        if (my_role === 'Instructor') {
+            $channel_el = $('#Channel_Client_' + dm.client.id);
+            channel_name = "dm-client-" + dm.client.id + "-instructor-" + my_id;
+            timetoken = dm.lastSeenInstructor;
+        }
+        else if (my_role === 'Client') {
+            $channel_el = $('#Channel_Instructor_' + dm.instructor.id);
+            channel_name = "dm-client-" + my_id + "-instructor-" + dm.instructor.id;
+            timetoken = dm.lastSeenClient;
+
+        }
+
+        channelList.push(channel_name);
+
+        if (timetoken == "0")
+            timetoken = "10000000000000000";
+
+        channelTimetokens.push(timetoken);
+
+        $channel_el.attr('data-timetoken', dm.lastMessageTimestamp);
+        $channel_el.detach().appendTo('#DM_list');
+    }
+
+    //var $DM_list_newest_channel = $('#DM_list .pn-channel:first');
+    //if ($DM_list_newest_channel.length > 0) {
+    //    $DM_list_newest_channel.click();
+    //}
+
+    FetchMessageCounts(channelList, channelTimetokens);
+</script>
+
+<script id="script_date_helpers">
+    Date.parsePubNub = function (str) {
+        return new Date(+str.substr(0, str.length - 4));
+    };
+
+    Date.prototype.toDDMMYYYY = function () {
+        return ("0" + this.getDate()).slice(-2) + "/" + ("0" + (this.getMonth() + 1)).slice(-2) + "/" + this.getFullYear();
+    };
+
+    Date.prototype.toHHMM = function () {
+        return ("0" + this.getHours()).slice(-2) + ":" + ("0" + (this.getMinutes())).slice(-2);
+    };
+
+    Date.formatPubnubTime = function (timetoken) {
+
+        var current_day = new Date();
+        current_day.setHours(0);
+        current_day.setMinutes(0);
+        current_day.setSeconds(0, 0);
+
+        var time = Date.parsePubNub(timetoken);
+
+        let timeMidnight = new Date(time.valueOf());
+        timeMidnight.setHours(0);
+        timeMidnight.setMinutes(0);
+        timeMidnight.setSeconds(0, 0);
+
+        const diffTime = Math.abs(current_day - timeMidnight);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        var time_str;
+        if (diffDays == 1)
+            time_str = "Yesterday " + time.toHHMM();
+        else if (time < current_day)
+            time_str = time.toDDMMYYYY() + " " + time.toHHMM();
+        else
+            time_str = time.toHHMM();
+
+        return time_str;
+    }
+</script>
+
+<script id="script_dark_mode_toggle">
+    $('#dark_mode_toggle_btn').click(function () {
+        if ($('#dark_mode_btn').is(':visible')) {
+            // Switching to light mode
+            $.cookie('dark_mode', false, {
+                path: '/',
+                expires: 3650
+            });
+
+        }
+        else {
+            // Switching to light mode
+
+            $.cookie('dark_mode', true, {
+                path: '/',
+                expires: 3650
+            });
+        }
+
+        $('#dark_mode_btn').toggle();
+        $('#light_mode_btn').toggle();
+
+        $('.app-simple').toggleClass('dark').toggleClass('light');
+        $('.pn-channel-list').toggleClass('pn-channel-list--dark').toggleClass('pn-channel-list--light');
+        $('.pn-msg-list').toggleClass('pn-msg-list--dark').toggleClass('pn-msg-list--light');
+        $('.pn-msg-input').toggleClass('pn-msg-input--dark').toggleClass('pn-msg-input--light');
+        $('.pn-member-list').toggleClass('pn-member-list--dark').toggleClass('pn-member-list--light');
+
+    });
+</script>
+}

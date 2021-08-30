@@ -1,0 +1,97 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.Instructor>
+
+
+@{
+    ViewData["Title"] = "Instructors";
+}
+
+@section SearchArea {
+    <div class="card">
+        <div class="card-body">
+            <h4>
+                Search instructors
+            </h4>
+            <form method="get" class="d-inline-block col-md-4">
+                <input type="text" name="SearchInstructor" value="@ViewData["SearchInstructor"]" autofocus placeholder="First name or last name..." class="form-control col-md-9 d-inline-block " /><div class="col-md-3 d-inline-block align-top">
+                    <button class="btn btn-primary w-100">Search</button>
+                </div>
+            </form>
+            @if (ViewData["SearchInstructor"] != null)
+            {
+                <form method="get" class="d-inline-block align-top">
+                    <button class="btn btn-default align-top">Clear Search</button>
+                </form>
+            }
+        </div>
+    </div>
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfilePicture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="/Picture/Instructor/@item.InstructorId" height="100" style="max-width: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <input type="checkbox" asp-for="@item.Status" onclick="return false;" class="large-checkbox" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.InstructorId" class="btn btn-teal">Edit</a> &nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.InstructorId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

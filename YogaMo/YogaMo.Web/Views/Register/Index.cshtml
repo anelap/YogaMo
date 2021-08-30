@@ -1,0 +1,149 @@
+﻿@model RegisterVM
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutRegister.cshtml";
+}
+<p class="login-box-msg">Register a new membership</p>
+
+<form asp-action="Register" method="post">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Username" asp-for="Username">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-user"></span>
+            </div>
+        </div>
+        <span asp-validation-for="Username" class="d-block w-100 text-sm ml-1 text-danger"></span>
+    </div>
+    <div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="First name" asp-for="FirstName">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                </div>
+            </div>
+            <input type="text" class="form-control" placeholder="Last name" asp-for="LastName">
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                </div>
+            </div>
+            <span asp-validation-for="FirstName" class="d-block w-100 text-sm ml-1 text-danger"></span>
+            <span asp-validation-for="LastName" class="d-block w-100 text-sm ml-1 text-danger"></span>
+
+        </div>
+    </div>
+    <div class="input-group mb-3">
+        <input type="email" class="form-control" placeholder="Email" asp-for="Email">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+            </div>
+        </div>
+        <span asp-validation-for="Email" class="d-block w-100 text-sm ml-1 text-danger"></span>
+    </div>
+    <div class="input-group mb-3">
+        <input type="password" class="form-control" placeholder="Password" asp-for="Password">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+            </div>
+        </div>
+        <span asp-validation-for="Password" class="d-block w-100 text-sm ml-1 text-danger"></span>
+    </div>
+    <div class="input-group mb-3">
+        <input type="tel" class="form-control" placeholder="Mobile number" asp-for="Phone">
+        <div class="input-group-append">
+            <div class="input-group-text">
+                <span class="fas fa-mobile-alt"></span>
+            </div>
+        </div>
+        <span asp-validation-for="Phone" class="d-block w-100 text-sm ml-1 text-danger"></span>
+    </div>
+    <div class="input-group mb-3">
+        <span class="gender-option">
+            <label for="Gender_F">Female</label>
+            <input type="radio" asp-for="Gender" id="Gender_F" value="Female">
+        </span>
+        <span class="gender-option">
+            <label for="Gender_M">Male</label>
+            <input type="radio" asp-for="Gender" id="Gender_M" value="Male">
+        </span>
+        <span class="gender-option">
+            <label for="Gender_O">Other</label>
+            <input type="radio" asp-for="Gender" id="Gender_O" value="Other">
+        </span>
+        <span asp-validation-for="Gender" class="d-block w-100 text-sm ml-1 text-danger"></span>
+    </div>
+    <div class="input-group mb-3 d-none" id="custom_gender_selection">
+        <input type="text" class="form-control" placeholder="Gender (optional)" asp-for="CustomGender">
+        <div class="input-group-append">
+            <div class="input-group-text">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+        </div>
+        <!-- /.col -->
+    </div>
+</form>
+
+<a asp-action="Index" asp-controller="Login" class="text-center">I already have a membership</a>
+<style>
+    .gender-option {
+        background-color: #fff;
+        border: 1px solid #ccd0d5;
+        box-sizing: border-box;
+        display: inline-block;
+        flex: 1 0 auto;
+        height: 36px;
+        margin: 8px 6px 6px;
+        padding: 0;
+        position: relative;
+        width: auto;
+        border-radius: 4px;
+        border-width: 1px;
+        display: inline-block;
+        padding: 5px 0 5px 4px;
+    }
+
+        .gender-option label {
+            font-weight: normal !important;
+            box-sizing: border-box;
+            color: #1c1e21;
+            display: inline-block;
+            font-size: 15px;
+            line-height: 26px;
+            padding: 0 28px 0 10px;
+            width: 100%;
+        }
+
+        .gender-option input[type="radio"] {
+            height: 36px;
+            margin: 0;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+
+        .gender-option:first-child {
+            margin-right: 4px;
+        }
+</style>
+<script>
+    $('.gender-option input[type="radio"]').change(function () {
+        var selectedGender = $(this).val();
+        if (selectedGender === 'Other')
+            $('#custom_gender_selection').removeClass('d-none');
+        else
+            $('#custom_gender_selection').addClass('d-none');
+
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

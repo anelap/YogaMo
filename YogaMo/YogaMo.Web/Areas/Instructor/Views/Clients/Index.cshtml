@@ -1,0 +1,94 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.Client>
+
+
+@{
+    ViewData["Title"] = "Clients";
+}
+
+@section SearchArea {
+    <div class="card">
+        <div class="card-body">
+            <h4>
+                Search clients
+            </h4>
+            <form method="get" class="d-inline-block col-md-4">
+                <input type="text" name="SearchClient" value="@ViewData["SearchClient"]" autofocus placeholder="First name, last name or city name..." class="form-control col-md-9 d-inline-block " /><div class="col-md-3 d-inline-block align-top">
+                    <button class="btn btn-primary w-100">Search</button>
+                </div>
+            </form>
+            @if (ViewData["SearchClient"] != null)
+            {
+                <form method="get" class="d-inline-block align-top">
+                    <button class="btn btn-default align-top">Clear Search</button>
+                </form>
+            }
+        </div>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProfilePicture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="/Picture/Client/@item.ClientId" height="100" style="max-width: 100px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SanitizedGender)
+                </td>
+                <td>
+                    @if (item.City != null)
+                    {
+                        @item.City.Name<span>,</span>
+                        @item.City.Country.Name
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

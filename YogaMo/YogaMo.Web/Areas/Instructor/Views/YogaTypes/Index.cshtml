@@ -1,0 +1,32 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.Yoga>
+
+@{
+    ViewData["Title"] = "Yoga Types";
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.YogaId" class="btn btn-teal">Edit</a> &nbsp;
+                <a asp-action="Delete" asp-route-id="@item.YogaId" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

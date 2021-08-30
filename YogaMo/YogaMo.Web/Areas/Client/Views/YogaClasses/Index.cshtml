@@ -1,0 +1,91 @@
+﻿@model List<YogaMo.WebAPI.Database.YogaClass>
+
+@{
+    ViewData["Title"] = "Yoga Classes";
+    Layout = "_LayoutShop";
+    var WorkingDays = new List<string>
+{
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+    };
+    var AvailableColors = new List<string>
+    {
+        "green",
+        "blue",
+        "purple",
+        "navy",
+        "red",
+        "orange",
+        "gold"
+    };
+    var YogaColors = new Dictionary<int, string>();
+
+}
+<link rel="stylesheet" href="~/css/timetable.css" />
+
+<div class="mt-3 d-none d-md-block"></div>
+
+<h2 class="mb-3">@ViewData["Title"]</h2>
+
+<div class='tab'>
+    <table border='0' cellpadding='0' cellspacing='0'>
+        <tr class='days'>
+            @foreach (var day in WorkingDays)
+            {
+                <th>@day</th>
+            }
+        </tr>
+        @while (Model.Count() > 0)
+        {
+            <tr>
+                @foreach (var day in WorkingDays)
+                {
+
+                    var item = Model.Where(x => x.Day == day).FirstOrDefault();
+
+                    @if (item != null)
+                    {
+                        if(!YogaColors.ContainsKey(item.YogaId.Value))
+                        {
+                            YogaColors[item.YogaId.Value] = AvailableColors.First();
+                            AvailableColors.RemoveAt(0);
+                        }
+
+                        string color = YogaColors[item.YogaId.Value];
+
+
+                        <td class='cs335 @color'><b>@item.Yoga.Name</b><br/>
+                            @item.Instructor.FullName<br/>
+                            @item.YogaHall?.Name<br />
+                        [@item.TimeFrom.ToString(@"hh\:mm") - @item.TimeTo.ToString(@"hh\:mm")]</td>
+
+                        {
+                            Model.Remove(item);
+                        }
+
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+
+
+                }
+            </tr>
+        }
+
+
+    </table>
+</div>
+
+
+<div class="mt-5 d-none d-md-block"></div>
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+}

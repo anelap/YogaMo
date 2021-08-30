@@ -1,0 +1,98 @@
+﻿@model YogaMo.WebAPI.Database.Order
+
+@{
+    ViewData["Title"] = "Order Details - #" + Model.OrderId;
+    Layout = "_LayoutShop";
+}
+
+<div class="mt-2 d-none d-md-block"></div>
+
+<h2>@ViewData["Title"]</h2>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </dt>
+        <dd class="col-sm-10">
+            $@Model.TotalPrice.ToString("0.00")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Client)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Client.Email)
+        </dd>
+    </dl>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Product
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Total Price
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItem)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        $@Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        $@(item.Quantity * item.Price)
+                    </td>
+                    <td>
+                        <a class="btn btn-teal" asp-area="" asp-controller="Product" asp-action="Index" asp-route-id="@item.ProductId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+<div>
+    @if (Model.OrderStatus == YogaMo.WebAPI.Database.OrderStatus.Processing)
+    {
+
+        <a asp-action="Purchase" asp-controller="Cart" asp-route-id="@Model.OrderId" class="btn btn-success">Complete purchase</a> @Html.Raw("&nbsp;")
+        <a asp-action="CancelOrder" asp-route-id="@Model.OrderId" class="btn btn-danger">Cancel Order</a> @Html.Raw("&nbsp;")
+    }
+    <a asp-action="Index" class="btn btn-teal">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+}

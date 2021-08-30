@@ -1,0 +1,99 @@
+﻿@model InstructorVM
+
+@{
+    ViewData["Title"] = "Edit Instructor";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="InstructorId" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProfilePicture" class="control-label"></label>
+                <img src="/Picture/Instructor/@Model.InstructorId" class="elevation-2 d-block" alt="User Image" width="200" onclick="$('#ProfilePicture').click();" style="cursor: pointer;">
+                <input type="file" asp-for="ProfilePicture" />
+
+                @if (Model.ProfilePicture != null && Model.ProfilePicture.Length > 0)
+                {
+                    <button type="button" class="btn btn-default" id="ButtonRemoveProfilePicture">Remove Profile Picture</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-default" id="ButtonRemoveProfilePicture" style="display: none;">Remove Profile Picture</button>
+                }
+                <input type="checkbox" hidden asp-for="RemoveProfilePicture" />
+            </div>
+            <div class="form-group">
+                <input type="checkbox" asp-for="Status" class="large-checkbox" />
+                <label asp-for="Status" class="control-label"></label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-area="Administrator" class="btn btn-default">Back to List</a>
+</div>
+
+<script>
+    $(':input[type=file]').change(function (event) {
+        if (event.target.files.length) {
+            var tmppath = URL.createObjectURL(event.target.files[0]);
+            $(this).siblings("img").attr('src', tmppath);
+            $('#ButtonRemoveProfilePicture').show();
+        }
+        else {
+            $(this).siblings("img").attr('src', "/Picture/Instructor/@Model.InstructorId");
+        }
+    });
+    $('#ButtonRemoveProfilePicture').click(function () {
+        $(this).hide();
+
+        $('#RemoveProfilePicture').prop('checked', true);
+        $('#ProfilePicture').val("");
+        $(this).siblings("img").attr('src', "@ImageHelper.DefaultImageLocation");
+    })
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

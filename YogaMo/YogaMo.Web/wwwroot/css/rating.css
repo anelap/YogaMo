@@ -1,0 +1,42 @@
+﻿.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+}
+
+    .rating > a, .rating > i {
+        display: inline-block;
+        position: relative;
+        width: 0.8em;
+        font-size: 20px;
+        line-height: 30px;
+    }
+
+
+        .rating > a.currentRating:before,
+        .rating > a.currentRating ~ a:before,
+        .rating > i.currentRating:before,
+        .rating > i.currentRating ~ i:before {
+            font-weight: 900;
+            color: orange;
+            left: -1px;
+        }
+
+        .rating > a:hover,
+        .rating > a:hover ~ a {
+            color: transparent !important;
+        }
+
+
+            .rating > a:hover:before,
+            .rating > a:hover ~ a:before {
+                font-weight: 900;
+                color: gold !important;
+                left: -1px;
+            }
+
+
+
+    .rating a {
+        text-decoration: none !important;
+    }

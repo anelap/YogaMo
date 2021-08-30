@@ -1,0 +1,87 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.Order>
+
+@{
+    ViewData["Title"] = "Orders";
+    var OrderStatusList = Html.GetEnumSelectList<YogaMo.WebAPI.Database.OrderStatus>();
+    var OrderStatus = ViewBag.OrderStatus as YogaMo.WebAPI.Database.OrderStatus?;
+    Layout = "_LayoutShop";
+}
+
+<div class="mt-2 d-none d-md-block"></div>
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>
+            Filter orders
+        </h4>
+        <form method="get" class="d-inline-block col-md-4">
+            <select name="OrderStatus" class="form-control col-md-9 d-inline-block" onchange="this.form.submit();">
+                <option value="">All orders</option>
+                @foreach (var item in OrderStatusList)
+                {
+                    if (OrderStatus != null && int.Parse(item.Value) == (int)OrderStatus.Value)
+                    {
+                        <option value="@item.Value" selected>@item.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                }
+            </select><div class="col-md-3 d-inline-block align-top">
+                <button class="btn btn-primary w-100" hidden>Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    $@item.TotalPrice.ToString("0.00")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                </td>
+                <td>
+                    @if (item.OrderStatus == YogaMo.WebAPI.Database.OrderStatus.Confirmed)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-teal">Manage Order</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-teal">Order Details</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="mt-5 d-none d-md-block"></div>
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+}

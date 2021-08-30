@@ -1,0 +1,60 @@
+﻿@model IEnumerable<YogaMo.WebAPI.Database.YogaClass>
+
+@{
+    ViewData["Title"] = "Yoga Classes";
+    var Instructor = Context.GetLoggedInInstructor();
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Day)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yoga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Instructor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YogaHallId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Day)
+                <div style="font-size: 11pt; color: grey">@Html.DisplayFor(modelItem => item.Time)</div>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yoga.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.FullName)
+            </td>
+            <td>
+                @item.YogaHall?.Name
+            </td>
+            <td>
+                @if (Instructor.InstructorId == item.InstructorId)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.YogaClassId" class="btn btn-teal">Edit</a><span>&nbsp;</span>
+                }
+
+                @if (Instructor.InstructorId == item.InstructorId)
+                {
+                    <a asp-area="Instructor" asp-action="Delete" asp-route-id="@item.YogaClassId" class="btn btn-danger">Delete</a>
+                }
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,67 @@
+﻿@model HomeVM
+<div class="row">
+    @if (Model.Products.Count == 0)
+    {
+        <h4 style="margin-top: 105px;">There are no products to show ☹</h4>
+    }
+
+    @foreach (var item in Model.Products)
+    {
+
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card pt-md-1 h--100">
+                <a asp-action="Index" asp-controller="Product" asp-route-id="@item.ProductId" class="card-img-link">
+                    @if (item.Photo == null)
+                    {
+                        <img class="card-img-top" src="http://placehold.it/700x400" alt="Product Picture">
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="/Picture/Product/@item.ProductId" alt="Product Picture">
+                    }
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a asp-action="Index" asp-controller="Product" asp-route-id="@item.ProductId">@item.Name</a>
+                    </h4>
+                    <h5><span class="price-sup">$</span>@item.Price.ToString("0")<span class="price-sup">@((item.Price - (int)item.Price).ToString("0.00").Substring(2))</span></h5>
+
+                    <span class="text-warning star-rating">
+                        @{
+                            var NumStars = (int)(item.AverageRating + 0.5);
+                        }
+                        @for (int i = 1; i <= NumStars; i++)
+                        {
+                            <span>&#9733;</span>
+                        }
+                        @for (int i = 1; i <= 5 - NumStars; i++)
+                        {
+                            <span>&#9734;</span>
+                        }
+                    </span>
+                    &nbsp;&nbsp;
+                    <strong class="text-muted">@item.AverageRating.ToString("0.00")</strong>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.row -->
+
+@if (Model.TotalPages > 1)
+{
+
+    <div class="row">
+        <nav class="mx-auto">
+            <ul class="pagination pg-blue">
+                <li class="page-item"><a class="page-link @(Model.Page <= 1 ? "disabled text-muted" : "")" asp-route-page="@(Model.Page - 1)" asp-route-category="@Model.Category">Previous</a></li>
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")"><a class="page-link" asp-route-page="@i" asp-route-category="@Model.Category">@i</a></li>
+                }
+                <li class="page-item"><a class="page-link @(Model.Page >= Model.TotalPages ? "disabled text-muted" : "")" asp-route-page="@(Model.Page + 1)" asp-route-category="@Model.Category">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+}

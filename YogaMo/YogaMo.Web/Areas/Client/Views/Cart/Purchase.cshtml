@@ -1,0 +1,83 @@
+﻿@model Order
+@{
+    Layout = "_LayoutShop";
+    ViewData["Title"] = "Purchase";
+}
+
+<link rel="stylesheet" href="~/css/stripe.css" />
+
+<form id="payment-form" class="mt-3">
+    <div id="card-element"><!-- placeholder for Elements --></div>
+    <button id="card-button">Pay Now</button>
+    <p id="payment-result"><!-- we'll pass the response from the server here --></p>
+</form>
+<a asp-action="ConfirmOrder" hidden id="url-confirm-order" />
+
+
+@section Scripts {
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        var stripe = Stripe('pk_test_51HOmvCKhXUiucPF3jQGKDdQDlMIguFeqWQsx6gYABN9oQvCE6ogtBalf1RAqUWZBxkZqZ1XrJrmDNmPYRPGE1Q6F004yQhXUcu');
+
+        var elements = stripe.elements();
+        var cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+    </script>
+    <script>
+    var form = document.getElementById('payment-form');
+
+    var resultContainer = document.getElementById('payment-result');
+    cardElement.on('change', function (event) {
+        if (event.error) {
+            resultContainer.textContent = event.error.message;
+        } else {
+            resultContainer.textContent = '';
+        }
+    });
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        resultContainer.textContent = "";
+        stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+        }).then(handlePaymentMethodResult);
+    });
+
+    function handlePaymentMethodResult(result) {
+        if (result.error) {
+            // An error happened when collecting card details, show it in the payment form
+            resultContainer.textContent = result.error.message;
+        } else {
+            // Otherwise send paymentMethod.id to your server (see Step 3)
+
+            var url = $('#url-confirm-order').attr('href');
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    PaymentMethodId: result.paymentMethod.id,
+                    OrderId: @Model.OrderId
+                 })
+            }).then(function (result) {
+                return result.json();
+            }).then(handleServerResponse);
+        }
+    }
+
+    function handleServerResponse(responseJson) {
+        if (responseJson.error) {
+            // An error happened when charging the card, show it in the payment form
+            resultContainer.textContent = responseJson.error;
+        } else {
+            // Show a success message
+            resultContainer.textContent = 'Success!';
+            location.href = '/';
+        }
+    }
+    </script>
+}
