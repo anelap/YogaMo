@@ -12,6 +12,7 @@ using YogaMo.Model;
 using YogaMo.Model.Requests;
 using YogaMo.WebAPI.Database;
 using YogaMo.WebAPI.Exceptions;
+using YogaMo.WebAPI.Helpers;
 
 namespace YogaMo.WebAPI.Services
 {
@@ -33,7 +34,7 @@ namespace YogaMo.WebAPI.Services
 
             if (user != null)
             {
-                var newHash = GenerateHash(user.PasswordSalt, password);
+                var newHash = PasswordHelper.GenerateHash(user.PasswordSalt, password);
 
                 if (newHash == user.PasswordHash) 
                 {
@@ -44,27 +45,7 @@ namespace YogaMo.WebAPI.Services
             return null;
         }
 
-        public static string GenerateSalt()
-        {
-            var buf = new byte[16];
-            (new RNGCryptoServiceProvider()).GetBytes(buf);
-            return Convert.ToBase64String(buf);
-        }
-
-        public static string GenerateHash(string salt, string password)
-        {
-            byte[] src = Convert.FromBase64String(salt);
-            byte[] bytes = Encoding.Unicode.GetBytes(password);
-            byte[] dst = new byte[src.Length + bytes.Length];
-
-            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
-            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
-
-            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
-            byte[] inArray = algorithm.ComputeHash(dst);
-            return Convert.ToBase64String(inArray);
-        }
-
+      
         public List<Model.Instructor> Get(InstructorsSearchRequest request)
         {
             var query = _context.Instructor.AsQueryable();
@@ -87,17 +68,6 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Instructor>(entity);
         }
 
-        public List<Model.Yoga> GetYogaByInstructor(int id) 
-        {
-            var query = _context.Yoga.AsQueryable();
-
-            query = query.Where(x => x.Instructor.InstructorId == id);
-
-            var list = query.ToList();
-
-            return _mapper.Map<List<Model.Yoga>>(list);
-        }
-
         public Model.Instructor Insert(InstructorsInsertRequest request)
         {
             var entity = _mapper.Map<Database.Instructor>(request);
@@ -107,8 +77,8 @@ namespace YogaMo.WebAPI.Services
                 throw new UserException("Passwords don't match");
             }
 
-            entity.PasswordSalt = GenerateSalt();
-            entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
+            entity.PasswordSalt = PasswordHelper.GenerateSalt();
+            entity.PasswordHash = PasswordHelper.GenerateHash(entity.PasswordSalt, request.Password);
 
             _context.Instructor.Add(entity); 
             _context.SaveChanges();
@@ -128,8 +98,8 @@ namespace YogaMo.WebAPI.Services
                 {
                     throw new UserException("Passwods don't match!");
                 }
-                entity.PasswordSalt = GenerateSalt();
-                entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
+                entity.PasswordSalt = PasswordHelper.GenerateSalt();
+                entity.PasswordHash = PasswordHelper.GenerateHash(entity.PasswordSalt, request.Password);
             }
 
             _context.SaveChanges();

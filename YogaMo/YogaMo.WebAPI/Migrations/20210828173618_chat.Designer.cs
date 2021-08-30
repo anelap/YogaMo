@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YogaMo.WebAPI.Database;
 
 namespace YogaMo.WebAPI.Migrations
 {
     [DbContext(typeof(_150222Context))]
-    partial class _150222ContextModelSnapshot : ModelSnapshot
+    [Migration("20210828173618_chat")]
+    partial class chat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,14 +115,6 @@ namespace YogaMo.WebAPI.Migrations
 
                     b.Property<DateTime>("LastMessage")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("LastSeenClient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastSeenInstructor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

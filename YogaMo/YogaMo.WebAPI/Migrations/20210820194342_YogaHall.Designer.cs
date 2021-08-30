@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YogaMo.WebAPI.Database;
 
 namespace YogaMo.WebAPI.Migrations
 {
     [DbContext(typeof(_150222Context))]
-    partial class _150222ContextModelSnapshot : ModelSnapshot
+    [Migration("20210820194342_YogaHall")]
+    partial class YogaHall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,39 +98,6 @@ namespace YogaMo.WebAPI.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
-                });
-
-            modelBuilder.Entity("YogaMo.WebAPI.Database.ChatInstructorsClients", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstructorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastMessage")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastSeenClient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastSeenInstructor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("ChatInstructorsClients");
                 });
 
             modelBuilder.Entity("YogaMo.WebAPI.Database.City", b =>
@@ -474,17 +443,12 @@ namespace YogaMo.WebAPI.Migrations
                     b.Property<TimeSpan>("TimeTo")
                         .HasColumnType("time");
 
-                    b.Property<int?>("YogaHallId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("YogaId")
                         .HasColumnType("int");
 
                     b.HasKey("YogaClassId");
 
                     b.HasIndex("InstructorId");
-
-                    b.HasIndex("YogaHallId");
 
                     b.HasIndex("YogaId");
 
@@ -501,7 +465,12 @@ namespace YogaMo.WebAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("YogaId")
+                        .HasColumnType("int");
+
                     b.HasKey("YogaHallId");
+
+                    b.HasIndex("YogaId");
 
                     b.ToTable("YogaHall");
                 });
@@ -552,21 +521,6 @@ namespace YogaMo.WebAPI.Migrations
                     b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
                         .WithMany()
                         .HasForeignKey("InstructorId");
-                });
-
-            modelBuilder.Entity("YogaMo.WebAPI.Database.ChatInstructorsClients", b =>
-                {
-                    b.HasOne("YogaMo.WebAPI.Database.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("YogaMo.WebAPI.Database.City", b =>
@@ -634,14 +588,17 @@ namespace YogaMo.WebAPI.Migrations
                         .HasForeignKey("InstructorId")
                         .HasConstraintName("FK_YogaClassInstructor");
 
-                    b.HasOne("YogaMo.WebAPI.Database.YogaHall", "YogaHall")
-                        .WithMany()
-                        .HasForeignKey("YogaHallId");
-
                     b.HasOne("YogaMo.WebAPI.Database.Yoga", "Yoga")
                         .WithMany("YogaClass")
                         .HasForeignKey("YogaId")
                         .HasConstraintName("FK_YogaClassYoga");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.YogaHall", b =>
+                {
+                    b.HasOne("YogaMo.WebAPI.Database.Yoga", "Yoga")
+                        .WithMany()
+                        .HasForeignKey("YogaId");
                 });
 #pragma warning restore 612, 618
         }

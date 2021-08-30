@@ -3,10 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace YogaMo.WebAPI.Migrations
 {
-    public partial class IspitRSII : Migration
+    public partial class admin_authtokens : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Administrator",
+                columns: table => new
+                {
+                    AdministratorId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    PasswordSalt = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administrator", x => x.AdministratorId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Category",
                 columns: table => new
@@ -170,6 +189,39 @@ namespace YogaMo.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AuthorizationToken",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ClientId = table.Column<int>(nullable: true),
+                    InstructorId = table.Column<int>(nullable: true),
+                    AdministratorId = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AuthorizationToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AuthorizationToken_Administrator_AdministratorId",
+                        column: x => x.AdministratorId,
+                        principalTable: "Administrator",
+                        principalColumn: "AdministratorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AuthorizationToken_Client_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Client",
+                        principalColumn: "ClientId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AuthorizationToken_Instructor_InstructorId",
+                        column: x => x.InstructorId,
+                        principalTable: "Instructor",
+                        principalColumn: "InstructorId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order_",
                 columns: table => new
                 {
@@ -246,6 +298,21 @@ namespace YogaMo.WebAPI.Migrations
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthorizationToken_AdministratorId",
+                table: "AuthorizationToken",
+                column: "AdministratorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthorizationToken_ClientId",
+                table: "AuthorizationToken",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AuthorizationToken_InstructorId",
+                table: "AuthorizationToken",
+                column: "InstructorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_City_CountryId",
@@ -325,6 +392,9 @@ namespace YogaMo.WebAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AuthorizationToken");
+
+            migrationBuilder.DropTable(
                 name: "OrderItem");
 
             migrationBuilder.DropTable(
@@ -332,6 +402,9 @@ namespace YogaMo.WebAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "YogaClass");
+
+            migrationBuilder.DropTable(
+                name: "Administrator");
 
             migrationBuilder.DropTable(
                 name: "Order_");

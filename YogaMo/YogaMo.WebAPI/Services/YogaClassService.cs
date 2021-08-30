@@ -25,7 +25,8 @@ namespace YogaMo.WebAPI.Services
         {
             var query = _context.YogaClass.AsQueryable();
 
-            query = query.Include(x => x.Yoga.Instructor);
+            query = query.Include(x => x.Instructor);
+            query = query.Include(x => x.Yoga);
 
             if(request.YogaId != 0)
             {

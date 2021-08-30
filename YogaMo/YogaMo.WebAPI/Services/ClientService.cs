@@ -12,6 +12,7 @@ using YogaMo.Model;
 using YogaMo.Model.Requests;
 using YogaMo.WebAPI.Database;
 using YogaMo.WebAPI.Exceptions;
+using YogaMo.WebAPI.Helpers;
 
 namespace YogaMo.WebAPI.Services
 {
@@ -53,29 +54,6 @@ namespace YogaMo.WebAPI.Services
             return _mapper.Map<Model.Client>(entity);
         }
 
-        public static string GenerateSalt()
-        {
-            var buf = new byte[16];
-            (new RNGCryptoServiceProvider()).GetBytes(buf);
-            return Convert.ToBase64String(buf);
-        }
-
-        public static string GenerateHash(string salt, string password)
-        {
-            if (password == null)
-                return null;
-            byte[] src = Convert.FromBase64String(salt);
-            byte[] bytes = Encoding.Unicode.GetBytes(password);
-            byte[] dst = new byte[src.Length + bytes.Length];
-
-            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
-            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
-
-            HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
-            byte[] inArray = algorithm.ComputeHash(dst);
-            return Convert.ToBase64String(inArray);
-        }
-
         public Model.Client Insert(ClientInsertRequest request)
         {
             var entity = _mapper.Map<Database.Client>(request);
@@ -85,8 +63,8 @@ namespace YogaMo.WebAPI.Services
                 throw new UserException("Passwords don't match");
             }
 
-            entity.PasswordSalt = GenerateSalt();
-            entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
+            entity.PasswordSalt = PasswordHelper.GenerateSalt();
+            entity.PasswordHash = PasswordHelper.GenerateHash(entity.PasswordSalt, request.Password);
 
             _context.Client.Add(entity);
             _context.SaveChanges();
@@ -103,8 +81,8 @@ namespace YogaMo.WebAPI.Services
 
             if (!string.IsNullOrWhiteSpace(request.Password))
             {
-                entity.PasswordSalt = GenerateSalt();
-                entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
+                entity.PasswordSalt = PasswordHelper.GenerateSalt();
+                entity.PasswordHash = PasswordHelper.GenerateHash(entity.PasswordSalt, request.Password);
             }
 
             _context.SaveChanges();
@@ -119,7 +97,7 @@ namespace YogaMo.WebAPI.Services
 
             if (user != null)
             {
-                var newHash = GenerateHash(user.PasswordSalt, password);
+                var newHash = PasswordHelper.GenerateHash(user.PasswordSalt, password);
 
                 if (newHash == user.PasswordHash) // if the password is correct
                 {

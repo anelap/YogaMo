@@ -16,8 +16,6 @@ namespace YogaMo.WebAPI.Services
         Model.Instructor Insert(InstructorsInsertRequest request);
         Model.Instructor Update(int id, InstructorsUpdateRequest request);
 
-        List<Model.Yoga> GetYogaByInstructor(int id);
-
         // Authentication 
         Model.Instructor Authenticate(string username, string password);
 

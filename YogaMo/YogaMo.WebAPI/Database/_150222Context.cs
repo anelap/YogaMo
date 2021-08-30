@@ -15,7 +15,10 @@ namespace YogaMo.WebAPI.Database
         {
         }
 
+        public virtual DbSet<Administrator> Administrator { get; set; }
+        public virtual DbSet<AuthorizationToken> AuthorizationToken { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<ChatInstructorsClients> ChatInstructorsClients { get; set; }
         public virtual DbSet<City> City { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Country> Country { get; set; }
@@ -26,15 +29,10 @@ namespace YogaMo.WebAPI.Database
         public virtual DbSet<Rating> Rating { get; set; }
         public virtual DbSet<Yoga> Yoga { get; set; }
         public virtual DbSet<YogaClass> YogaClass { get; set; }
+        public virtual DbSet<YogaPhoto> YogaPhoto { get; set; }
+        public virtual DbSet<YogaVideo> YogaVideo { get; set; }
+        public virtual DbSet<YogaHall> YogaHall { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=150222;Trusted_Connection=True;");
-            }
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -226,10 +224,6 @@ namespace YogaMo.WebAPI.Database
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.HasOne(d => d.Instructor)
-                    .WithMany(p => p.Yoga)
-                    .HasForeignKey(d => d.InstructorId)
-                    .HasConstraintName("FK_YogaInstructor");
             });
 
             modelBuilder.Entity<YogaClass>(entity =>
@@ -238,14 +232,15 @@ namespace YogaMo.WebAPI.Database
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Time)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
                 entity.HasOne(d => d.Yoga)
                     .WithMany(p => p.YogaClass)
                     .HasForeignKey(d => d.YogaId)
                     .HasConstraintName("FK_YogaClassYoga");
+
+                entity.HasOne(d => d.Instructor)
+                    .WithMany(p => p.YogaClass)
+                    .HasForeignKey(d => d.InstructorId)
+                    .HasConstraintName("FK_YogaClassInstructor");
             });
 
             OnModelCreatingPartial(modelBuilder);

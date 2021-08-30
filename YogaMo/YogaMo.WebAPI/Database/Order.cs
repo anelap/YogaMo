@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace YogaMo.WebAPI.Database
 {
@@ -12,8 +13,11 @@ namespace YogaMo.WebAPI.Database
 
         public int OrderId { get; set; }
         public int? ClientId { get; set; }
+         
+        [Display(Name="Price")]
         public decimal TotalPrice { get; set; }
         public DateTime Date { get; set; }
+        [Display(Name = "Order Status")]
         public OrderStatus OrderStatus { get; set; }
 
         public virtual Client Client { get; set; }

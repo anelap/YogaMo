@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace YogaMo.WebAPI.Database
 {
@@ -11,11 +12,11 @@ namespace YogaMo.WebAPI.Database
         }
 
         public int YogaId { get; set; }
+        [Required]
         public string Name { get; set; }
-        public int? InstructorId { get; set; }
+        [Required]
         public string Description { get; set; }
 
-        public virtual Instructor Instructor { get; set; }
         public virtual ICollection<YogaClass> YogaClass { get; set; }
     }
 }

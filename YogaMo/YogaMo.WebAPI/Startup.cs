@@ -25,7 +25,7 @@ using YogaMo.WebAPI.Database;
 using YogaMo.WebAPI.Filters;
 using YogaMo.WebAPI.Security;
 using YogaMo.WebAPI.Services;
-
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 
 
 namespace YogaMo.WebAPI
@@ -43,7 +43,8 @@ namespace YogaMo.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc(x => x.Filters.Add<ErrorFilter>());
+            services.AddMvc(x => x.Filters.Add<ErrorFilter>())
+                .AddNewtonsoftJson();
 
             services.AddControllers();
 

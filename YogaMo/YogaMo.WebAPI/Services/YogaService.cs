@@ -38,8 +38,6 @@ namespace YogaMo.WebAPI.Services
                 query = query.Where(x => x.Name.ToUpper().Contains(request.Name.ToUpper()));
             }
 
-            query = query.Include(x => x.Instructor);
-
             var list = query.ToList();
 
             return _mapper.Map<List<Model.Yoga>>(list);
@@ -61,15 +59,6 @@ namespace YogaMo.WebAPI.Services
         {
             var entity = _mapper.Map<Database.Yoga>(request);
 
-            var instructor = _context.Instructor.Find(request.InstructorId);
-
-            if (instructor == null)
-            {
-                throw new UserException("Instructor not found");
-            }
-
-            entity.Instructor = instructor;
-
             _context.Yoga.Add(entity);
             _context.SaveChanges();
 
@@ -81,16 +70,6 @@ namespace YogaMo.WebAPI.Services
             var entity = _context.Yoga.Find(id);
 
             if (entity == null) throw new UserException("Yoga does not exist");
-
-
-            var instructor = _context.Instructor.Find(request.InstructorId);
-
-            if (instructor == null)
-            {
-                throw new UserException("Instructor not found");
-            }
-
-            entity.Instructor = instructor;
 
             Mapper.Map<YogaInsertRequest, Database.Yoga>(request, entity);
 

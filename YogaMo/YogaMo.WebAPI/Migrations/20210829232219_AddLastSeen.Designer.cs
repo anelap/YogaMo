@@ -10,8 +10,8 @@ using YogaMo.WebAPI.Database;
 namespace YogaMo.WebAPI.Migrations
 {
     [DbContext(typeof(_150222Context))]
-    [Migration("20200919181800_IspitRSII")]
-    partial class IspitRSII
+    [Migration("20210829232219_AddLastSeen")]
+    partial class AddLastSeen
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,68 @@ namespace YogaMo.WebAPI.Migrations
                 .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.Administrator", b =>
+                {
+                    b.Property<int>("AdministratorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AdministratorId");
+
+                    b.ToTable("Administrator");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.AuthorizationToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("AdministratorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdministratorId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("AuthorizationToken");
+                });
 
             modelBuilder.Entity("YogaMo.WebAPI.Database.Category", b =>
                 {
@@ -36,6 +98,37 @@ namespace YogaMo.WebAPI.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.ChatInstructorsClients", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastMessage")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastSeenClient")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastSeenInstructor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("ChatInstructorsClients");
                 });
 
             modelBuilder.Entity("YogaMo.WebAPI.Database.City", b =>
@@ -183,8 +276,7 @@ namespace YogaMo.WebAPI.Migrations
                     b.Property<byte[]>("ProfilePicture")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool?>("Status")
-                        .IsRequired()
+                    b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValueSql("((1))");
@@ -244,6 +336,9 @@ namespace YogaMo.WebAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
@@ -278,6 +373,12 @@ namespace YogaMo.WebAPI.Migrations
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Color")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -339,10 +440,8 @@ namespace YogaMo.WebAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("InstructorId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -350,8 +449,6 @@ namespace YogaMo.WebAPI.Migrations
                         .HasMaxLength(50);
 
                     b.HasKey("YogaId");
-
-                    b.HasIndex("InstructorId");
 
                     b.ToTable("Yoga");
                 });
@@ -368,19 +465,108 @@ namespace YogaMo.WebAPI.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Time")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<int?>("InstructorId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan>("TimeFrom")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("TimeTo")
+                        .HasColumnType("time");
+
+                    b.Property<int?>("YogaHallId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("YogaId")
                         .HasColumnType("int");
 
                     b.HasKey("YogaClassId");
 
+                    b.HasIndex("InstructorId");
+
+                    b.HasIndex("YogaHallId");
+
                     b.HasIndex("YogaId");
 
                     b.ToTable("YogaClass");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.YogaHall", b =>
+                {
+                    b.Property<int>("YogaHallId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("YogaHallId");
+
+                    b.ToTable("YogaHall");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.YogaPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PhotoFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YogaPhoto");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.YogaVideo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ThumbnailFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("YoutubeID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("YogaVideo");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.AuthorizationToken", b =>
+                {
+                    b.HasOne("YogaMo.WebAPI.Database.Administrator", "Administrator")
+                        .WithMany()
+                        .HasForeignKey("AdministratorId");
+
+                    b.HasOne("YogaMo.WebAPI.Database.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId");
+                });
+
+            modelBuilder.Entity("YogaMo.WebAPI.Database.ChatInstructorsClients", b =>
+                {
+                    b.HasOne("YogaMo.WebAPI.Database.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
+                        .WithMany()
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("YogaMo.WebAPI.Database.City", b =>
@@ -441,16 +627,17 @@ namespace YogaMo.WebAPI.Migrations
                         .HasConstraintName("FK_RatingProduct");
                 });
 
-            modelBuilder.Entity("YogaMo.WebAPI.Database.Yoga", b =>
-                {
-                    b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
-                        .WithMany("Yoga")
-                        .HasForeignKey("InstructorId")
-                        .HasConstraintName("FK_YogaInstructor");
-                });
-
             modelBuilder.Entity("YogaMo.WebAPI.Database.YogaClass", b =>
                 {
+                    b.HasOne("YogaMo.WebAPI.Database.Instructor", "Instructor")
+                        .WithMany("YogaClass")
+                        .HasForeignKey("InstructorId")
+                        .HasConstraintName("FK_YogaClassInstructor");
+
+                    b.HasOne("YogaMo.WebAPI.Database.YogaHall", "YogaHall")
+                        .WithMany()
+                        .HasForeignKey("YogaHallId");
+
                     b.HasOne("YogaMo.WebAPI.Database.Yoga", "Yoga")
                         .WithMany("YogaClass")
                         .HasForeignKey("YogaId")
