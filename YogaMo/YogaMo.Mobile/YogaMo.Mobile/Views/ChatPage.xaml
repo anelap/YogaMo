@@ -2,14 +2,123 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:YogaMo.Mobile.ViewModels" xmlns:models="clr-namespace:YogaMo.Mobile.Models"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:YogaMo.Mobile.ViewModels" xmlns:models="clr-namespace:YogaMo.Mobile.Models" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:controls="clr-namespace:YogaMo.Mobile.Controls" xmlns:listView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:behavior="clr-namespace:YogaMo.Mobile.Behaviors" xmlns:local="clr-namespace:YogaMo.Mobile.Views" xmlns:converter="clr-namespace:YogaMo.Mobile.Converters"
              mc:Ignorable="d"
              x:Class="YogaMo.Mobile.Views.ChatPage"
              x:DataType="viewmodels:ChatViewModel"
+            BackgroundColor="{DynamicResource Gray-100}"
              Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+            <local:MessageDataTemplateSelector x:Key="MessageDataTemplateSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
 
-        <ScrollView Padding="5" x:Name="MessagesScrollView">
+        <ScrollView>
+
+            <!--  List view to show the recent chat history  -->
+            <listView:SfListView
+                    x:Name="ListView"
+                    AutoFitMode="Height"
+                    BackgroundColor="{StaticResource Transparent}"
+                    FocusBorderThickness="0"
+                    IsStickyFooter="True"
+                    IsStickyHeader="True"
+                    ItemTemplate="{StaticResource MessageDataTemplateSelector}"
+                    ItemsSource="{Binding MessagesList}"
+                    RowSpacing="12"
+                    SelectionMode="None"
+                    VerticalOptions="Fill">
+
+                <listView:SfListView.Behaviors>
+                    <behavior:ChatMessageListViewBehavior />
+                </listView:SfListView.Behaviors>
+
+                <!--<listView:SfListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Label
+                                Margin="0,16,0,0"
+                                FontFamily="Montserrat-Medium"
+                                FontSize="12"
+                                HorizontalTextAlignment="Center"
+                                LineHeight="1.5"
+                                Text="{Binding Key, Converter={StaticResource DateTimeToStringConverter}}"
+                                TextColor="{DynamicResource Gray-700}" />
+                    </DataTemplate>
+                </listView:SfListView.GroupHeaderTemplate>-->
+
+                <!--  Navigation bar  -->
+                <listView:SfListView.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid  RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <StackLayout
+                                    Padding="4,10,10,10"
+                                    BackgroundColor="{DynamicResource Gray-Bg}"
+                                    HorizontalOptions="FillAndExpand"
+                                    Orientation="Horizontal"
+                                    Spacing="0"
+                                    VerticalOptions="Fill">
+
+                                <Label
+                                        HorizontalOptions="FillAndExpand"
+                                        HorizontalTextAlignment="Start"
+                                        Style="{StaticResource TitleLabelStyle}"
+                                        Text="{Binding Instructor.Name}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center">
+                                </Label>
+
+                            </StackLayout>
+                            <BoxView
+                                    Grid.Row="1"
+                                    BackgroundColor="{DynamicResource Gray-200}"
+                                    HeightRequest="1" />
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.HeaderTemplate>
+
+                <!--  New text entry in the chat conversation  -->
+                <listView:SfListView.FooterTemplate>
+                    <DataTemplate>
+                        <Grid
+                                Padding="16,5,16,24"
+                                ColumnSpacing="16">
+
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                           
+                            <!--  Extendable editor  -->
+                            <StackLayout Padding="5,0">
+                                <Entry Text="{Binding NewMessage}" Keyboard="Chat" Completed="Entry_Completed" Placeholder="Enter your message..." MaxLength="160"/>
+                            </StackLayout>
+
+                            <!--  Send Button  -->
+
+                            <Button Grid.Column="1" Text="Send" x:Name="SendBtn" Clicked="Button_Clicked"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </listView:SfListView.FooterTemplate>
+            </listView:SfListView>
+
+        </ScrollView>
+        
+        <!--<ScrollView Padding="5" x:Name="MessagesScrollView">
             <StackLayout>
 
                 <CollectionView ItemsSource="{Binding MessagesList}" HorizontalOptions="Fill" HeightRequest="560" SelectionMode="None">
@@ -37,6 +146,6 @@
                 <Button Text="Send" x:Name="SendBtn" Clicked="Button_Clicked"/>
             </StackLayout>
 
-        </ScrollView>
+        </ScrollView>-->
     </ContentPage.Content>
 </ContentPage>

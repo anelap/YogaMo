@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,6 +8,7 @@ namespace YogaMo.Mobile
 {
     public partial class App : Application
     {
+        public static string ImageServerPath { get; } = "https://cdn.syncfusion.com/essential-ui-kit-for-xamarin.forms/common/uikitimages/";
         public APIService _serviceClients = new APIService("Clients");
         public App()
         {

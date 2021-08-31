@@ -19,7 +19,7 @@ namespace YogaMo.Mobile.Views
         public ChatPage(int instructorId)
         {
             InitializeComponent();
-            BindingContext = model = new ChatViewModel(instructorId, MessagesScrollView, SendBtn);
+            BindingContext = model = new ChatViewModel(instructorId);
         }
 
         protected async override void OnAppearing()

@@ -27,8 +27,6 @@ namespace YogaMo.Mobile.ViewModels
             set { SetProperty(ref _instructor, value); }
         }
 
-        public ScrollView MessagesScrollView { get; }
-        public Button SendBtn { get; }
         public int _instructorId { get; set; }
 
 
@@ -46,11 +44,9 @@ namespace YogaMo.Mobile.ViewModels
             set { SetProperty(ref _newMessage, value); }
         }
 
-        public ChatViewModel(int instructorId, ScrollView messagesScrollView, Button SendBtn)
+        public ChatViewModel(int instructorId)
         {
             _instructorId = instructorId;
-            MessagesScrollView = messagesScrollView;
-            this.SendBtn = SendBtn;
             PN = PubNubHelper.GetPubnub();
 
             SubscribeListener = GetSubscribeListener();
@@ -150,7 +146,7 @@ namespace YogaMo.Mobile.ViewModels
         public async Task Init()
         {
             Instructor = await _serviceInstructors.GetById<Model.Instructor>(_instructorId);
-            Title = "Chat with " + Instructor.Name;
+            Title = "Chat";
 
             channel_name = "dm-client-" + APIService.CurrentUser.ClientId + "-instructor-" + Instructor.InstructorId;
 
